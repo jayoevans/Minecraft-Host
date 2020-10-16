@@ -16,28 +16,30 @@ export class Login extends React.Component<Props, State>
     render()
     {
         return (
-            <form onSubmit = { this.handleSubmit }>
+            <div id="container">
+                <form id="loginForm" onSubmit = { this.handleSubmit }>
 
-                <div>
-                    <input name = "username"
-                           placeholder = "username"
-                           value = { this.state.username }
-                           onChange = { event => this.setUsername(event.target.value) }
-                    />
-                </div>
+                    <div>
+                        <input id="input" name = "username"
+                            placeholder = "username"
+                            value = { this.state.username }
+                            onChange = { event => this.setUsername(event.target.value) }
+                        />
+                    </div>
 
-                <div>
-                    <input name = "password"
-                           type = "password"
-                           placeholder = "password"
-                           value = { this.state.password }
-                           onChange = { event => this.setPassword(event.target.value) }
-                    />
-                </div>
+                    <div>
+                        <input id="input" name = "password"
+                            type = "password"
+                            placeholder = "password"
+                            value = { this.state.password }
+                            onChange = { event => this.setPassword(event.target.value) }
+                        />
+                    </div>
 
-                <button type = "submit">Submit</button>
+                    <button id="btn" type = "submit">Submit</button>
 
-            </form>
+                </form>
+            </div>
         );
     }
 
