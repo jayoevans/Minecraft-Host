@@ -1,4 +1,5 @@
 import React from "react";
+import axios from 'axios';
 
 export class Login extends React.Component<Props, State>
 {
@@ -46,6 +47,13 @@ export class Login extends React.Component<Props, State>
 
         console.log("Submit Form");
         console.log(this.state);
+        const data = this.state;
+        axios.post('http://localhost:5000/login',{data})
+        .then(res => {
+            console.log(res);})
+        .catch(err => {
+            console.log(err);
+        })
     };
 
     private setUsername(username: string)
