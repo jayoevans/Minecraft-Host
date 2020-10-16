@@ -17,6 +17,7 @@ export class Login extends React.Component<Props, State>
     {
         return (
             <div id="container">
+                <h1 id="h1">Login</h1>
                 <form id="loginForm" onSubmit = { this.handleSubmit }>
 
                     <div>
@@ -37,6 +38,7 @@ export class Login extends React.Component<Props, State>
                     </div>
 
                     <button id="btn" type = "submit">Submit</button>
+                    <div id="errorDiv">div for error reporting</div>
 
                 </form>
             </div>

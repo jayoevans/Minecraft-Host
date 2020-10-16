@@ -8,7 +8,12 @@ html, body, #container {
   justify-content: center; 
    background-color: #282c34;
 }
-
+#h1{
+  margin: 0;
+  font-size: 50px;
+  font-weight: bold;
+  float: left;
+}
 #loginForm {
   box-sizing: border-box;
   width: 100%;
@@ -40,4 +45,10 @@ html, body, #container {
   border-radius: 4px;
   background: #fff;
   cursor: pointer;
+}
+#errorDiv{
+  font-size: 15px;
+  color: red;
+  font-style: italic;
+  margin-left: 10;
 }
