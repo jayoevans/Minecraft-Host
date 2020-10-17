@@ -9,7 +9,7 @@ export namespace Middlewares
         next(error);
     }
 
-    export function errorHandler(err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction)
+    export function errorHandler(err: Error, req: express.Request, res: express.Response, next: express.NextFunction)
     {
         const statusCode = res.statusCode !== 200 ? res.statusCode : 500;
 
