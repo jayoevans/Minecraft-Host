@@ -4,6 +4,9 @@ import morgan from "morgan";
 import helmet from "helmet";
 import cors from "cors";
 import { router } from "./api/server";
+import { minecraft } from "./api/minecraft";
+import { login } from "./api/login";
+import {test} from "./api/test";
 import { Middlewares } from "./middlewares";
 
 const app = express();
@@ -34,7 +37,8 @@ export class App
 
     private routes()
     {
-        app.use('/api', router);
+        app.use('/router', router);
+        app.use("/test", test);
     }
 
     private assets()
