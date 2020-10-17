@@ -3,9 +3,8 @@ import axios from "axios";
 
 export const minecraft = express.Router();
 
-minecraft.get("/chizzy", (req, res) => 
+minecraft.get("/status", (req, res) => 
 {
-  res.send("working");
     axios.get("https://status.mojang.com/check")
     .then(function (response) 
     {
@@ -17,7 +16,7 @@ minecraft.get("/chizzy", (req, res) =>
     });
 });
 
-minecraft.get("/minecraft/user/:id",(req: express.Request, res: express.Response) => 
+minecraft.get("/user/:id",(req: express.Request, res: express.Response) => 
 {
     let query: string = req.params.id;
     let currentTime: number = Date.now();
