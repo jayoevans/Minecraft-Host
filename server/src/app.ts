@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import morgan from "morgan";
 import helmet from "helmet";
 import cors from "cors";
+import { router } from "./api/server";
 import { Middlewares } from "./middlewares";
 
 const app = express();
@@ -33,7 +34,7 @@ export class App
 
     private routes()
     {
-        // app.use('/api', router);
+        app.use('/api', router);
     }
 
     private assets()
