@@ -15,25 +15,31 @@ class User
 }
 
 
-minecraft.get("/status", (req, res) => {
+minecraft.get("/status", (req, res) => 
+{
   axios.get("https://status.mojang.com/check")
-    .then(function (response) {
+    .then(function (response) 
+    {
       res.json(response.data);
     })
-    .catch(function (error) {
+    .catch(function (error) 
+    {
       console.log(error);
     });
 });
 
-minecraft.get("/user/:id", async (req: express.Request, res: express.Response) => {
+minecraft.get("/user/:id", async (req: express.Request, res: express.Response) => 
+{
   let query: string = req.params.id;
   let currentTime: number = Date.now();
   let userId;
   let newUser = new User();
   let URL: string = `https://api.mojang.com/users/profiles/minecraft/${query}?at=${currentTime}`;
   await axios.get(URL)
-    .then(function (response) {
-      if (response.data) {
+    .then(function (response) 
+    {
+      if (response.data) 
+      {
         // userData = response.data.id;
         res.json(response.data);
         userId = response.data.id;
@@ -44,7 +50,8 @@ minecraft.get("/user/:id", async (req: express.Request, res: express.Response) =
         res.json({ "Error": "Doesn't exist" });
       }
     })
-    .catch(function (error) {
+    .catch(function (error) 
+    {
       console.log(error);
     });
 
@@ -72,13 +79,15 @@ minecraft.get("/user/:id", async (req: express.Request, res: express.Response) =
     await axios.get(URL)
     .then(function (response) 
     {
-      if (response.data) {
+      if (response.data) 
+      {
         // console.log(response.data);
         let test = response.data.properties[0].value;
         let skinTexture = JSON.parse(base64.decode(test));
         newUser.skin = skinTexture.textures.SKIN.url;
       }
-      else {
+      else 
+      {
         res.json({ "Error": "Doesn't exist" });
       }
     })
