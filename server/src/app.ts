@@ -3,7 +3,7 @@ import bodyParser from "body-parser";
 import morgan from "morgan";
 import helmet from "helmet";
 import cors from "cors";
-import { router } from "./api/server";
+import { server } from "./api/server";
 import { minecraft } from "./api/minecraft";
 import { login } from "./api/login";
 import {test} from "./api/test";
@@ -23,7 +23,7 @@ app.use(cors());
 app.use("/test", test);
 app.use("/minecraft", minecraft);
 app.use("/login", login);
-app.use("/server", router);
+app.use("/server", server);
 
 app.use(express.static("public"));
 app.use(express.static("views"));
