@@ -2,22 +2,49 @@ import express from "express";
 import axios from "axios";
 
 export const login = express.Router();
-let users = {
-  user1: [
+let users =  [
     {
+      id: 1,
       username: "ben",
       password: "123",
     },
-  ],
-  user2: [
     {
+      id: 2,
       username: "jay",
       password: "123",
-    },
-  ],
-};
+    }
+  ];
 
 login.post("/", (req: express.Request, res: express.Response) => 
 {
-    res.send(200);
-})
+    let sentData = req.body.data;
+    let loggedIn:Boolean = false;
+    for(let key in users)
+    {
+        if(users.hasOwnProperty(key) && loggedIn == false)
+        {
+            if(users[key].username == sentData.username)
+            {
+                console.log("Same usernames")
+                if(users[key].password == sentData.password)
+                {
+                    loggedIn = true;
+                }
+                else
+                {
+                    loggedIn=false;
+                }
+            }
+        }
+    }
+    
+    if(loggedIn)
+    {
+        res.sendStatus(200);
+    }
+    else
+    {
+        res.sendStatus(401);
+    }
+    
+});

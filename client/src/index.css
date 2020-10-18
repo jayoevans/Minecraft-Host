@@ -1,4 +1,4 @@
-html, body, #container {
+html, body, .loginPage #container {
   height: 100%;
   font-size: 28px;
   color: #fff;
@@ -8,13 +8,13 @@ html, body, #container {
   justify-content: center; 
    background-color: #282c34;
 }
-#h1{
+.loginPage #h1{
   margin: 0;
   font-size: 50px;
   font-weight: bold;
   float: left;
 }
-#loginForm {
+.loginPage #loginForm {
   box-sizing: border-box;
   width: 100%;
   max-width: 400px;
@@ -22,7 +22,7 @@ html, body, #container {
   padding-right: 20px;
 }
 
-#input {
+.loginPage #input {
   box-sizing: border-box;
   outline: none;
   border: solid 2px #1189de;
@@ -34,7 +34,7 @@ html, body, #container {
   background: rgba(255, 255, 255, 1);
 }
 
-#btn {
+.loginPage #btn {
   width: 100%;
   min-width: 280px;
   color: #565656;
@@ -46,7 +46,7 @@ html, body, #container {
   background: #fff;
   cursor: pointer;
 }
-#errorDiv{
+.loginPage #errorDiv{
   font-size: 15px;
   color: red;
   font-style: italic;

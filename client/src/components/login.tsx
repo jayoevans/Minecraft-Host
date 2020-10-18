@@ -16,12 +16,12 @@ export class Login extends React.Component<Props, State>
     render()
     {
         return (
-            <div id="container">
-                <h1 id="h1">Login</h1>
-                <form id="loginForm" onSubmit = { this.handleSubmit }>
+            <div id="container" className="loginPage">
+                <h1 id="h1" className="loginPage">Login</h1>
+                <form id="loginForm" className="loginPage" onSubmit = { this.handleSubmit }>
 
                     <div>
-                        <input id="input" name = "username"
+                        <input id="input" className="loginPage" name = "username"
                             placeholder = "username"
                             value = { this.state.username }
                             onChange = { event => this.setUsername(event.target.value) }
@@ -29,7 +29,7 @@ export class Login extends React.Component<Props, State>
                     </div>
 
                     <div>
-                        <input id="input" name = "password"
+                        <input id="input" className="loginPage" name = "password"
                             type = "password"
                             placeholder = "password"
                             value = { this.state.password }
@@ -37,8 +37,8 @@ export class Login extends React.Component<Props, State>
                         />
                     </div>
 
-                    <button id="btn" type = "submit">Submit</button>
-                    <div id="errorDiv">div for error reporting</div>
+                    <button id="btn" className="loginPage" type = "submit">Submit</button>
+                    <div id="errorDiv" className="loginPage">div for error reporting</div>
 
                 </form>
             </div>
