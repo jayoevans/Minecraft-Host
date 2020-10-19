@@ -6,6 +6,42 @@ AWS.config.update({ region: "ap-southeast-2" });
 const EC2: AWS.EC2 = new AWS.EC2({ apiVersion: "2016-11-15" });
 export const server = express.Router();
 
+server.get("/create", (req: express.Request, res: express.Response) =>
+{
+    try
+    {
+
+    }
+    catch (e)
+    {
+        console.error(e);
+    }
+});
+
+server.get("/start", (req: express.Request, res: express.Response) =>
+{
+    try
+    {
+
+    }
+    catch (e)
+    {
+        console.error(e);
+    }
+});
+
+server.get("/attach/:instanceId/:volumeId", (req: express.Request, res: express.Response) =>
+{
+    try
+    {
+
+    }
+    catch (e)
+    {
+        console.error(e);
+    }
+});
+
 server.get("/", (req: express.Request, res: express.Response) =>
 {
     try
@@ -42,20 +78,47 @@ server.get("/", (req: express.Request, res: express.Response) =>
 
                 if (!data.Instances)
                 {
+                    res.send("Instance creation failed");
                     console.log("No instances?");
                     return;
                 }
 
-                // TODO Get public IP
+                const instanceId = data.Instances[0].InstanceId!;
 
-                // const instanceId = data.Instances[0].InstanceId!;
+                res.send(instanceId);
             })
             .catch(error =>
             {
                 console.error(error, error.stack);
             });
+    }
+    catch (e)
+    {
+        console.error(e);
+        // TODO Respond with error status
+    }
+});
 
-        res.json({ name: "Name" });
+server.get("/:instanceId", (req, res) =>
+{
+    try
+    {
+        const instanceId = req.params.instanceId;
+
+        EC2.describeInstances({ InstanceIds: [ instanceId ] }).promise().then(data =>
+        {
+            console.log(JSON.stringify(data));
+
+            const reservation = data.Reservations![0];
+            const instance = reservation.Instances![0];
+
+            res.send("Public IP: " + instance.PublicIpAddress);
+
+        })
+            .catch(error =>
+            {
+                console.error(error, error.stack);
+            });
     }
     catch (e)
     {

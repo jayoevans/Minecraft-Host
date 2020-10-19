@@ -1,3 +1,19 @@
+# Minecraft-Host
+
+Docker <code>sudo docker run -p 25565:25565 -d jayoevans/minecraft /home/server/start.sh</code>
+
+### Server API
+`GET /servers` List server volumes
+<br>
+`GET /server/:serverId` Fetch the server volume
+<br>
+`GET /server/create` Create a new volume
+<br>
+`GET /server/start/` Start a server instance
+<br>
+`GET /server/attach/:instanceId/:volumeId` Attack a volume to an instance
+
+
 # Express API Starter
 
 Includes API Server utilities:
