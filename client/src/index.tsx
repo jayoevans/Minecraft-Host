@@ -6,7 +6,7 @@ import { Portal } from "./components/portal";
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* <Login /> */}
+    <Login />
     <Portal />
   </React.StrictMode>,
   document.getElementById('root')

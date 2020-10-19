@@ -12,7 +12,17 @@ let users =  [
       id: 2,
       username: "jay",
       password: "123",
-    }
+    },
+    {
+        id: 3,
+        username: "user1",
+        password: "123",
+      },
+      {
+        id: 4,
+        username: "user2",
+        password: "123",
+      }
   ];
 
 login.post("/", (req: express.Request, res: express.Response) => 

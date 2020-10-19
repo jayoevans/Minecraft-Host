@@ -36,35 +36,51 @@ export class Portal extends React.Component<Props, State> {
 
     render() {
         return (
-            <div id="container" className="portal">
+            <div id="portalContainer" className="portal">
                 <h1>Portal</h1>
-                <div id="infoDiv" className="portal">
-                    <div>
-                        <h3>Current Minecraft name: {this.state.username}</h3>
-                        <form
-                            id="loginForm"
-                            className="portal"
-                            onSubmit={this.handleSubmit}
-                        >
-                            <input
-                                id="input"
-                                className="portal"
-                                name="username"
-                                placeholder="username"
-                                value={this.state.username}
-                                onChange={(event) =>
-                                    this.setUsername(event.target.value)
-                                }
-                            />
-                            <button id="btn" className="portal" type="submit">
-                                Submit
-                            </button>
-                        </form>
-                    </div>
-                    <h3>Minecraft uuid: {this.state.uuid}</h3>
-                    <ul>Previous names: </ul>
-                    <div id="previousNames" className="portal"></div>
-                    <button id="launchServer" className="portal"></button>
+                <div id="splitDiv" >
+                    <article id="lHalf" >
+                        <div id="infoDiv" >
+                            <div>
+                                <h3 id="h3">Current Minecraft name: {this.state.username}</h3>
+                                <form
+                                    id="loginForm"
+                                    
+                                    onSubmit={this.handleSubmit}
+                                >
+                                    <input
+                                        id="input"
+                                        
+                                        name="username"
+                                        placeholder="username"
+                                        value={this.state.username}
+                                        onChange={(event) =>
+                                            this.setUsername(event.target.value)
+                                        }
+                                    />
+                                    <button id="btn"  type="submit">
+                                        Submit
+                                    </button>
+                                </form>
+                            </div>
+                            <h3 id="h3">Minecraft uuid: {this.state.uuid}</h3>
+                            <h3 id="h3">Previous names: </h3>
+                            <div id="previousNames" ></div>
+                            <ul>
+                                <li>test1</li>
+                                <li>test2</li>
+                                <li>test3</li>
+                                <li>test4</li>
+                            </ul>
+                            <button id="launchServer" >Start my Minecraft server</button>
+                        </div>
+                    </article>
+                    <article id="rHalf" >
+                        <h3 id="h3">Players skin</h3>
+                        <div id="imgDiv" >
+                            <img id="skin" src="http://textures.minecraft.net/texture/a7c0223494759c0cee2491b758e004f858d3c4d6dd77f7379782b423ce01464d" alt="Players minecraft skin"/>
+                        </div>
+                    </article>
                 </div>
             </div>
         );
