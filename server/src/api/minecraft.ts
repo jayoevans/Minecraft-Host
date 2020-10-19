@@ -1,106 +1,98 @@
-import express, { response } from "express";
+import express from "express";
 import axios from "axios";
 import base64 from "js-base64";
 
-let userData:any;
-
 export const minecraft = express.Router();
 
-class User
-{
-  username:string;
-  uuid:string;
-  previousUsernames:any;
-  skin:any;
+class User {
+    username: string;
+    uuid: string;
+    previousUsernames: any;
+    skin: any;
 }
 
-
-minecraft.get("/status", (req, res) => 
-{
-  axios.get("https://status.mojang.com/check")
-    .then(function (response) 
-    {
-      res.json(response.data);
-    })
-    .catch(function (error) 
-    {
-      console.log(error);
-    });
+minecraft.get("/status", (req, res) => {
+    axios
+        .get("https://status.mojang.com/check")
+        .then(function (response) {
+            res.json(response.data);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 });
 
-minecraft.get("/user/:id", async (req: express.Request, res: express.Response) => 
+minecraft.get(
+    "/user/:id",
+    async (req: express.Request, res: express.Response) => {
+        let query: string = req.params.id;
+        let currentTime: number = Date.now();
+        let newUser = new User();
+        let errorCheck:Boolean = false;
+        let URL: string = `https://api.mojang.com/users/profiles/minecraft/${query}?at=${currentTime}`;
+        await axios
+            .get(URL)
+            .then(function (response) {
+                if (response.data) {
+                    newUser.username = response.data.name;
+                    newUser.uuid = response.data.id;
+                } else {
+                    res.json({ Error: "Doesn't exist" });
+                    errorCheck = true;
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+                res.json({ Error: "Something went wrong" });
+                errorCheck = true;
+            });
+            
+            if(!errorCheck)
+            {
+              newUser.skin = await getSkin(newUser.uuid);
+              newUser.previousUsernames = await getUsernames(newUser.uuid);
+              
+              res.json(JSON.parse(JSON.stringify(newUser)));
+              console.log(newUser.username);
+              console.log(newUser.uuid);
+              console.log(newUser.skin);
+              console.log(newUser.previousUsernames);
+            }
+    }
+);
+async function getSkin(uuid: String):Promise<String> {
+    let URL = `https://sessionserver.mojang.com/session/minecraft/profile/${uuid}`;
+    let skin:String = "";
+    await axios
+        .get(URL)
+        .then(function (response) {
+                let test = response.data.properties[0].value;
+                let skinTexture = JSON.parse(base64.decode(test));
+                
+                console.log(skinTexture);
+                skin = skinTexture.textures.SKIN.url;
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+        return skin;
+}
+
+async function getUsernames(uuid: String):Promise<JSON>
 {
-  let query: string = req.params.id;
-  let currentTime: number = Date.now();
-  let userId;
-  let newUser = new User();
-  let URL: string = `https://api.mojang.com/users/profiles/minecraft/${query}?at=${currentTime}`;
-  await axios.get(URL)
-    .then(function (response) 
-    {
-      if (response.data) 
-      {
-        // userData = response.data.id;
-        res.json(response.data);
-        userId = response.data.id;
-        newUser.username = response.data.name;
-        newUser.uuid = response.data.id;
-      }
-      else {
-        res.json({ "Error": "Doesn't exist" });
-      }
-    })
-    .catch(function (error) 
-    {
-      console.log(error);
-    });
-
-    URL = `https://api.mojang.com/user/profiles/${userId}/names`;
-    await axios.get(URL)
-    .then(function (response) 
-    {
-      if (response.data) {
-        newUser.previousUsernames = response.data;
-      }
-      else {
-        res.json({ "Error": "Doesn't exist" });
-      }
-    })
-    .catch(function (error) 
-    {
-      console.log(error);
-    });
-
-    
-
-    //Testing uuid -> profile + skin/cape
-
-    URL = `https://sessionserver.mojang.com/session/minecraft/profile/${userId}`;
-    await axios.get(URL)
-    .then(function (response) 
-    {
-      if (response.data) 
-      {
-        // console.log(response.data);
-        let test = response.data.properties[0].value;
-        let skinTexture = JSON.parse(base64.decode(test));
-        newUser.skin = skinTexture.textures.SKIN.url;
-      }
-      else 
-      {
-        res.json({ "Error": "Doesn't exist" });
-      }
-    })
-    .catch(function (error) 
-    {
-      console.log(error);
-    });
-
-
-    console.log(newUser.username);
-    console.log(newUser.uuid);
-    console.log(newUser.previousUsernames);
-    console.log(newUser.skin);
-
-    //TODO: Store the newUser into 
-});
+    let URL = `https://api.mojang.com/user/profiles/${uuid}/names`;
+    let names:any = "";
+    await axios
+        .get(URL)
+        .then(function (response) 
+        {
+          names = response.data;
+          //returns a millisecond timestamp.
+          //Convert to seconds -> display conversion to show date of name change?
+        })
+        .catch(function (error) 
+        {
+          console.log(error);
+        });
+        return names;
+}

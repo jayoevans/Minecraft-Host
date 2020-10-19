@@ -99,7 +99,7 @@ html, body{
   background: #fff;
   cursor: pointer;
 }
-.loginPage #errorDiv{
+.loginPage p{
   font-size: 15px;
   color: red;
   font-style: italic;
