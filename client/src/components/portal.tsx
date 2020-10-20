@@ -1,8 +1,11 @@
 import React from "react";
 import axios from "axios";
 
-export class Portal extends React.Component<Props, State> {
-    constructor(props: Props) {
+let previousNames:any = [];
+export class Portal extends React.Component<Props, State> 
+{
+    constructor(props: Props) 
+    {
         super(props);
 
         this.state = {
@@ -12,34 +15,43 @@ export class Portal extends React.Component<Props, State> {
             // previousNames: [],
         };
     }
-    async componentDidMount() {
-        try {
-            if (this.state.username) {
+    async componentDidMount() 
+    {
+        try 
+        {
+            if (this.state.username) 
+            {
                 let uuid;
                 let skin;
-                let URL =
-                    "http://localhost:5000/minecraft/user/" +
-                    this.state.username;
-                await axios
-                    .get(URL)
-                    .then((res) => {
+                let URL = "http://localhost:5000/minecraft/user/" +this.state.username;
+                await axios.get(URL)
+                    .then((res) => 
+                    {
                         uuid = res.data.uuid;
                         skin = res.data.skin;
+                        previousNames = res.data.previousUserNames;
+                        if(previousNames === undefined)
+                        {
+                            previousNames =[{"No data":"Soz"}];
+                        }
                         console.log(res.data);
                     })
-                    .catch((error) => {
+                    .catch((error) => 
+                    {
                         console.log(error);
                     });
 
                 this.setUuid(uuid);
                 this.setSkin(skin);
             }
-        } catch (error) {
+        } catch (error) 
+        {
             console.log(error);
         }
     }
 
-    render() {
+    render() 
+    {
         return (
             <div id="portalContainer" className="portal">
                 <h1>Portal</h1>
@@ -61,21 +73,17 @@ export class Portal extends React.Component<Props, State> {
                                     <button id="btn" type="submit">
                                         Submit
                                     </button>
-                                    
-
-                                    
                                 </form>
                             </div>
                             <h3 id="h3"> Current Minecraft name:{this.state.username}</h3>
                             <h3 id="h3">Minecraft uuid: {this.state.uuid}</h3>
                             <h3 id="h3">Previous names: </h3>
-                            <div id="previousNames"></div>
-                            <ul>
-                                <li>test1</li>
-                                <li>test2</li>
-                                <li>test3</li>
-                                <li>test4</li>
-                            </ul>
+                            <div id="previousNames">
+                                {previousNames.map(function(d, idx)
+                                {
+                                    return(<li key={idx}>{d.name}</li>)
+                                })}
+                            </div>
                             <button id="launchServer">
                                 Start my Minecraft server
                             </button>
@@ -96,17 +104,25 @@ export class Portal extends React.Component<Props, State> {
         );
     }
 
-    handleSubmit = (event: React.FormEvent) => {
+    handleSubmit = (event: React.FormEvent) => 
+    {
         event.preventDefault();
         this.componentDidMount();
         console.log(URL);
     };
+    private displayPreviousNames()
+    {
+        console.log("Hitting");
+        return previousNames.map((name) => <li>{name}</li>);
+    }
 
-    private setUsername(username: string) {
+    private setUsername(username: string) 
+    {
         this.setState({ username });
     }
 
-    private setUuid(uuid: string) {
+    private setUuid(uuid: string) 
+    {
         this.setState({ uuid });
     }
     private setSkin(skin: string)

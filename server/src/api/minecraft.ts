@@ -7,7 +7,7 @@ export const minecraft = express.Router();
 class User {
     username: string;
     uuid: string;
-    previousUsernames: any;
+    previousUserNames: any;
     skin: any;
 }
 
@@ -50,13 +50,13 @@ minecraft.get(
             if(!errorCheck)
             {
               newUser.skin = await getSkin(newUser.uuid);
-              newUser.previousUsernames = await getUsernames(newUser.uuid);
+              newUser.previousUserNames = await getUsernames(newUser.uuid);
               
               res.json(JSON.parse(JSON.stringify(newUser)));
               console.log(newUser.username);
               console.log(newUser.uuid);
               console.log(newUser.skin);
-              console.log(newUser.previousUsernames);
+              console.log(newUser.previousUserNames);
             }
     }
 );
