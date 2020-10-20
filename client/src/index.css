@@ -1,5 +1,6 @@
-html, body, .loginPage #container {
+html, body{
   height: 100%;
+  width: 100%;
   font-size: 28px;
   color: #fff;
   display: flex;
@@ -7,6 +8,58 @@ html, body, .loginPage #container {
   align-items: center;
   justify-content: center; 
    background-color: #282c34;
+}
+#root{
+  width: inherit;
+}
+#portalContainer{
+  /* background-color: green; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; 
+  background-color:  #282c34;
+  border-radius: 20px;
+}
+#loginContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; 
+  background-color: #282c34;
+}
+.portal #splitDiv{
+  background-color: #30343b;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.5);
+  height: 100%;
+  width: 80%;
+}
+
+.portal #infoDiv{
+  display: inline;
+  float: left;
+  text-align: left;
+}
+.portal #lHalf{
+  /* background-color: green; */
+  /* color: green; */
+  float: left;
+  width: 50%;
+  text-align: center;
+  
+}
+.portal #rHalf{
+  /* color: red; */
+  /* background-color: red; */
+  float: right;
+  width: 50%;
+  text-align: center;
+}
+.portal img{
+  min-width: 64px;
+  height: auto;
+  width: 1000%;
+  max-width: 40%;
 }
 .loginPage #h1{
   margin: 0;
@@ -46,9 +99,10 @@ html, body, .loginPage #container {
   background: #fff;
   cursor: pointer;
 }
-.loginPage #errorDiv{
+.loginPage p{
   font-size: 15px;
   color: red;
   font-style: italic;
   margin-left: 10;
 }
+

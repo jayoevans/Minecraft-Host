@@ -6,7 +6,6 @@ import cors from "cors";
 import { server } from "./api/server";
 import { minecraft } from "./api/minecraft";
 import { login } from "./api/login";
-import {test} from "./api/test";
 import { Middlewares } from "./middlewares";
 
 const app = express();
@@ -20,7 +19,6 @@ app.use(morgan('dev'));
 app.use(helmet());
 app.use(cors());
 
-app.use("/test", test);
 app.use("/minecraft", minecraft);
 app.use("/login", login);
 app.use("/server", server);
