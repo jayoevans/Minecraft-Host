@@ -1,6 +1,7 @@
 import express from "express";
 import AWS from "aws-sdk";
 import { toBase64 } from "js-base64";
+import { UserData } from "../aws/user-data";
 
 AWS.config.update({ region: "ap-southeast-2" });
 
@@ -8,6 +9,8 @@ const EC2: AWS.EC2 = new AWS.EC2({ apiVersion: "2016-11-15" });
 const EBS: AWS.EBS = new AWS.EBS({ apiVersion: "2019-11-02" });
 
 export const server = express.Router();
+
+// TODO Add server status check, keep pinging EC2 until the new instance is ready and update the React front-end
 
 server.get("/create", (req: express.Request, res: express.Response) =>
 {
@@ -49,15 +52,17 @@ server.get("/start", (req: express.Request, res: express.Response) =>
 {
     try
     {
+        const serverId = "a0b08af8-1290-11eb-adc1-0242ac120002";
+
         const params: AWS.EC2.RunInstancesRequest = {
-            ImageId: "ami-099c1869f33464fde",
+            ImageId: "ami-047267d2d91b1fe81", // "ami-099c1869f33464fde",
             InstanceType: "t2.micro",
             MinCount: 1,
             MaxCount: 1,
             SubnetId: "subnet-05a3b8177138c8b14",
             IamInstanceProfile: { Name: "ec2SSMCab432" },
             InstanceInitiatedShutdownBehavior: "terminate",
-            UserData: toBase64("MINECRAFT_SERVER_ID"),
+            UserData: UserData.get(serverId),
             TagSpecifications: [
                 {
                     ResourceType: "instance",
@@ -69,7 +74,7 @@ server.get("/start", (req: express.Request, res: express.Response) =>
                     ]
                 }
             ],
-            SecurityGroupIds: [ "sg-0df7690dc45862598", "sg-032bd1ff8cf77dbb9" ]
+            SecurityGroupIds: [ "sg-0bdc8d8e220c83e3c" ] // "sg-0df7690dc45862598", "sg-032bd1ff8cf77dbb9"
         };
 
         // Get UserData with `curl http://169.254.169.254/latest/user-data`
