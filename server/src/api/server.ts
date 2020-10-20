@@ -1,16 +1,43 @@
 import express from "express";
 import AWS from "aws-sdk";
+import { toBase64 } from "js-base64";
 
 AWS.config.update({ region: "ap-southeast-2" });
 
 const EC2: AWS.EC2 = new AWS.EC2({ apiVersion: "2016-11-15" });
+const EBS: AWS.EBS = new AWS.EBS({ apiVersion: "2019-11-02" });
+
 export const server = express.Router();
 
 server.get("/create", (req: express.Request, res: express.Response) =>
 {
     try
     {
+        const params: AWS.EC2.CreateVolumeRequest = {
+            VolumeType: "gp2",
+            SnapshotId: "",
+            AvailabilityZone: "ap-southeast-2a",
+            TagSpecifications: [
+                {
+                    ResourceType: "volume",
+                    Tags: [
+                        {
+                            Key: "qut-username",
+                            Value: "10413316"
+                        }
+                    ]
+                }
+            ]
+        };
 
+        EC2.createVolume(params).promise().then(data =>
+        {
+            res.json(data);
+        })
+        .catch(error =>
+        {
+            console.error(error, error.stack);
+        });
     }
     catch (e)
     {
@@ -22,33 +49,6 @@ server.get("/start", (req: express.Request, res: express.Response) =>
 {
     try
     {
-
-    }
-    catch (e)
-    {
-        console.error(e);
-    }
-});
-
-server.get("/attach/:instanceId/:volumeId", (req: express.Request, res: express.Response) =>
-{
-    try
-    {
-
-    }
-    catch (e)
-    {
-        console.error(e);
-    }
-});
-
-server.get("/", (req: express.Request, res: express.Response) =>
-{
-    try
-    {
-        // TODO Enable auto-assign public IP
-        // NetworkInterface.AssociatePublicIpAddress: true
-
         const params: AWS.EC2.RunInstancesRequest = {
             ImageId: "ami-099c1869f33464fde",
             InstanceType: "t2.micro",
@@ -57,6 +57,7 @@ server.get("/", (req: express.Request, res: express.Response) =>
             SubnetId: "subnet-05a3b8177138c8b14",
             IamInstanceProfile: { Name: "ec2SSMCab432" },
             InstanceInitiatedShutdownBehavior: "terminate",
+            UserData: toBase64("MINECRAFT_SERVER_ID"),
             TagSpecifications: [
                 {
                     ResourceType: "instance",
@@ -70,6 +71,8 @@ server.get("/", (req: express.Request, res: express.Response) =>
             ],
             SecurityGroupIds: [ "sg-0df7690dc45862598", "sg-032bd1ff8cf77dbb9" ]
         };
+
+        // Get UserData with `curl http://169.254.169.254/latest/user-data`
 
         EC2.runInstances(params).promise()
             .then(data =>
@@ -85,12 +88,74 @@ server.get("/", (req: express.Request, res: express.Response) =>
 
                 const instanceId = data.Instances[0].InstanceId!;
 
-                res.send(instanceId);
+                res.send("Instance: " + instanceId);
             })
             .catch(error =>
             {
                 console.error(error, error.stack);
             });
+    }
+    catch (e)
+    {
+        console.error(e);
+    }
+});
+
+server.get("/attach/:instanceId/:volumeId", (req: express.Request, res: express.Response) =>
+{
+    try
+    {
+        const instanceId = req.params.instanceId;
+        const volumeId = req.params.volumeId;
+
+        const params: AWS.EC2.AttachVolumeRequest = {
+            Device: "/dev/sdg",
+            InstanceId: instanceId,
+            VolumeId: volumeId
+        };
+
+        EC2.attachVolume(params).promise()
+            .then(data =>
+            {
+
+                /*
+                const params: AWS.EFS.FileSystemDescription = {
+
+                };
+
+                EFS.createFileSystem().promise()
+                    .then(data =>
+                    {
+
+                    })
+                    .catch(error =>
+                    {
+
+                    });
+
+                 */
+
+                res.json(data);
+            })
+            .catch(error =>
+            {
+                console.error(error, error.stack);
+            });
+    }
+    catch (e)
+    {
+        console.error(e);
+    }
+});
+
+server.get("/", (req: express.Request, res: express.Response) =>
+{
+    try
+    {
+        // TODO Enable auto-assign public IP
+        // NetworkInterface.AssociatePublicIpAddress: true
+
+
     }
     catch (e)
     {
