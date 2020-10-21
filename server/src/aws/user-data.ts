@@ -9,17 +9,17 @@ export namespace UserData
             "mkdir /home/minecraft\n" +
             "cd /home/minecraft\n" +
             "\n" +
-            "echo \"Setting up artifact service...\"\n" +
-            "git clone https://github.com/jayoevans/Artifact-Service.git\n" +
+            "echo \"Setting up storage...\"\n" +
+            "git clone https://github.com/jayoevans/Minecraft-Storage.git\n" +
             "\n" +
-            "cd Artifact-Service/artifacts\n" +
-            "chmod +x ArtifactService.jar\n" +
+            "cd Minecraft-Storage/dist\n" +
+            "chmod +x Storage-Reader.jar\n" +
             "\n" +
-            "echo \"Downloading artifacts...\"\n" +
-            "java -jar ArtifactService.jar /home/minecraft " + serverId + "\n" +
+            "echo \"Downloading resources...\"\n" +
+            "java -jar Storage-Reader.jar /home/minecraft " + serverId + "\n" +
             "\n" +
             "cd /home/minecraft\n" +
-            "rm -rf Artifact-Service\n" +
+            "rm -rf Minecraft-Storage\n" +
             "\n" +
             "echo \"Starting server...\"\n" +
             "cd /home/minecraft/server\n" +
