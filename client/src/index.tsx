@@ -5,7 +5,6 @@ import './index.css';
 import { Login } from "./components/login";
 import { Portal } from "./components/portal";
 import Navbar from "./components/Navbar/navbar"
-
 import NewWorld from './pages/newWorld';
 import Account from './pages/account';
 

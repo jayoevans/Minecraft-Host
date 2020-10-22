@@ -5,14 +5,14 @@ const Navbar = () => {
         <>
             <Nav>
                 <NavLink to='/home'>
-                    <h1>Logo</h1>
+                    <img src={require("../../images/minecraft.png")} alt=""/>
                 </NavLink>
                 <Bars/>
                 <NavMenu>
-                    <NavLink to='/newWorld' activeStyle>
+                    <NavLink to='/newWorld' >
                         New World
                     </NavLink>
-                    <NavLink to='/account' activeStyle>
+                    <NavLink to='/account' >
                         Account
                     </NavLink>
                 </NavMenu>
