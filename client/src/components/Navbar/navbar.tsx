@@ -9,9 +9,6 @@ const Navbar = () => {
                 </NavLink>
                 <Bars/>
                 <NavMenu>
-                    <NavLink to='/newWorld' >
-                        New World
-                    </NavLink>
                     <NavLink to='/account' >
                         Account
                     </NavLink>

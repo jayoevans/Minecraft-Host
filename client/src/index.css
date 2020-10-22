@@ -1,6 +1,8 @@
 *{
   font-family: 'Sora', sans-serif;
   box-sizing: border-box;
+  /* margin: 0;
+  padding: 0; */
 }
 
 html, body{
@@ -29,6 +31,59 @@ html, body{
   background-color:  #282c34;
   border-radius: 20px;
 }
+.savedWorlds{
+  display: inline-flex;
+  height: px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.savedWorlds #h3{
+  padding: 0;
+  margin: 0;
+}
+#h3{
+  margin-top: 10px;
+}
+button{
+  max-height: 30px;
+  min-height: 30px;
+  margin-top: 5px;
+  margin-left: 10px;
+}
+.worldDiv{
+  padding: 0px;
+  padding-left: 50px;
+  margin: 0px;
+  height: 65px;
+  width: auto;
+  text-align: center;
+  display: flex;
+ 
+}
+.worldDiv #img-container{
+  float: left;
+
+}
+.worldDiv #info{
+  text-align: left;
+  padding: 0;
+  margin: 0;
+  max-width: 300px;
+  display: inherit;
+}
+.worldDiv p{
+  padding: 0;
+  margin: 10px 10px 10px 10px;
+  font-size: .7em;
+}
+.worldDiv #buttonDiv{
+  padding: 0;
+  margin: 0;
+  float: right;
+  display: inherit;
+
+}
+
 #loginContainer {
   display: flex;
   flex-direction: column;

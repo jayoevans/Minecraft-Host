@@ -60,6 +60,36 @@ export class Portal extends React.Component<Props, State>
                 <div id="splitDiv">
                     <article id="lHalf">
                         <div id="infoDiv">
+                            <h3 id="h3"> Current Minecraft name:{this.state.username}</h3>
+                            <h3 id="h3">Previous names: </h3>
+                            <div id="previousNames">
+                                {previousNames.map(function(d, idx)
+                                {
+                                    return(<li key={idx}>{d.name}</li>)
+                                })}
+                            </div>
+                            
+                            <div className="savedWorlds">
+                                <h3 id="h3">Saved worlds</h3>
+                                <button>New world</button>
+                            </div>
+                            
+                            <div className="worldDiv">
+                                <div id="img-container">
+                                    <img src={require("../images/WorldPreview.png")}/>
+                                </div>
+                                <div id="info">
+                                    <p>*World Name*</p>
+                                    <div id="buttonDiv">
+                                        <button>Start</button>
+                                        <button>Delete</button>
+                                    </div>
+                                    
+                                </div>
+                                
+                            </div>
+                            
+                            
                             <div>
                                 <p>Enter your minecraft username here:</p>
                                 <form id="loginForm" onSubmit={this.handleSubmit}>
@@ -76,15 +106,6 @@ export class Portal extends React.Component<Props, State>
                                         Submit
                                     </button>
                                 </form>
-                            </div>
-                            <h3 id="h3"> Current Minecraft name:{this.state.username}</h3>
-                            <h3 id="h3">Minecraft uuid: {this.state.uuid}</h3>
-                            <h3 id="h3">Previous names: </h3>
-                            <div id="previousNames">
-                                {previousNames.map(function(d, idx)
-                                {
-                                    return(<li key={idx}>{d.name}</li>)
-                                })}
                             </div>
                             <button id="launchServer">
                                 Start my Minecraft server
