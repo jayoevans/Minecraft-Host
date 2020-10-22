@@ -1,6 +1,12 @@
+*{
+  font-family: 'Sora', sans-serif;
+  box-sizing: border-box;
+}
+
 html, body{
   height: 100%;
   width: 100%;
+  margin: 0;
   font-size: 28px;
   color: #fff;
   display: flex;
@@ -11,6 +17,8 @@ html, body{
 }
 #root{
   width: inherit;
+  min-width: 90%;
+  min-height: 100%;
 }
 #portalContainer{
   /* background-color: green; */

@@ -54,6 +54,7 @@ export class Portal extends React.Component<Props, State>
     {
         return (
             <div id="portalContainer" className="portal">
+                
                 <h1>Portal</h1>
                 <div id="splitDiv">
                     <article id="lHalf">
