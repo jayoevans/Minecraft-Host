@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
-import{Nav,NavLink,Bars,NavMenu,NavBtn,NavBtnLink} from './NavbarElements'
+import React from 'react'
+import{Nav,NavLink,Bars,NavMenu} from './NavbarElements'
 const Navbar = () => {
     return(
         <>
             <Nav>
-                <NavLink to='/'>
+                <NavLink to='/home'>
                     <h1>Logo</h1>
                 </NavLink>
                 <Bars/>

@@ -14,9 +14,9 @@ ReactDOM.render(
   <React.StrictMode>
     <Router>
     <Navbar/>
-      {/* <Login /> */}
       <Switch>
-        <Route path='/' exact component={Portal}/>
+        <Route path='/' exact component={Login}/>
+        <Route path='/home' exact component={Portal}/>
         <Route path='/newWorld' exact component={NewWorld}/>
         <Route path='/account' exact component={Account}/>
       </Switch>

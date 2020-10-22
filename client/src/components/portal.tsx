@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import ModalPopup from "./modalPopup"
 
 let previousNames:any = [];
 export class Portal extends React.Component<Props, State> 
@@ -54,7 +55,7 @@ export class Portal extends React.Component<Props, State>
     {
         return (
             <div id="portalContainer" className="portal">
-                
+                <ModalPopup/>
                 <h1>Portal</h1>
                 <div id="splitDiv">
                     <article id="lHalf">
@@ -111,11 +112,6 @@ export class Portal extends React.Component<Props, State>
         this.componentDidMount();
         console.log(URL);
     };
-    private displayPreviousNames()
-    {
-        console.log("Hitting");
-        return previousNames.map((name) => <li>{name}</li>);
-    }
 
     private setUsername(username: string) 
     {
