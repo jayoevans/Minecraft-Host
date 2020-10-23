@@ -54,6 +54,7 @@ export class Portal extends React.Component<Props, State>
     render() 
     {
         return (
+            
             <div id="portalContainer" className="portal">
                 <ModalPopup/>
                 <h1>Portal</h1>

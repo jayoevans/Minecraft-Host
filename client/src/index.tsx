@@ -4,21 +4,14 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import './index.css';
 // import { Login } from "./components/login";
 import {AlteredLogin} from "./components/alteredLogin";
-import { Portal } from "./components/portal";
 import Navbar from "./components/Navbar/navbar"
+import { Portal } from "./components/portal";
 import Account from './pages/account';
 
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
-    <Navbar/>
-      <Switch>
-        <Route path='/' exact component={AlteredLogin}/>
-        <Route path='/home' exact component={Portal}/>
-        <Route path='/account' exact component={Account}/>
-      </Switch>
-    </Router>
+    <AlteredLogin/>
   </React.StrictMode>,
   document.getElementById('root')
 );
