@@ -22,9 +22,7 @@ minecraft.get("/status", (req, res) => {
         });
 });
 
-minecraft.get(
-    "/user/:id",
-    async (req: express.Request, res: express.Response) => {
+minecraft.get("/user/:id",async (req: express.Request, res: express.Response) => {
         let query: string = req.params.id;
         let currentTime: number = Date.now();
         let newUser = new User();

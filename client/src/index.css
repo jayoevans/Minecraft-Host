@@ -44,12 +44,7 @@ html, body{
 #h3{
   margin-top: 10px;
 }
-button{
-  max-height: 30px;
-  min-height: 30px;
-  margin-top: 5px;
-  margin-left: 10px;
-}
+
 .worldDiv{
   padding: 0px;
   padding-left: 50px;
@@ -161,6 +156,9 @@ button{
   border-radius: 4px;
   background: #fff;
   cursor: pointer;
+  max-height: 332px;
+  margin-top: 0;
+  margin-left: 0;
 }
 .loginPage p{
   font-size: 15px;
@@ -168,4 +166,9 @@ button{
   font-style: italic;
   margin-left: 10;
 }
-
+button{
+  max-height: 30px;
+  min-height: 30px;
+  margin-top: 5px;
+  margin-left: 10px;
+}
