@@ -89,25 +89,6 @@ export class Portal extends React.Component<Props, State>
                                 </div>
                                 
                             </div>
-                            
-                            
-                            <div>
-                                <p>Enter your minecraft username here:</p>
-                                <form id="loginForm" onSubmit={this.handleSubmit}>
-                                    <input
-                                        id="input"
-                                        name="username"
-                                        placeholder="username"
-                                        value={this.state.username}
-                                        onChange={event =>
-                                            this.setUsername(event.target.value)
-                                        }
-                                    />
-                                    <button id="btn" type="submit">
-                                        Submit
-                                    </button>
-                                </form>
-                            </div>
                             <button id="launchServer">
                                 Start my Minecraft server
                             </button>

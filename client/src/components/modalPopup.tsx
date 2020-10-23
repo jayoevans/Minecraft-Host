@@ -20,15 +20,12 @@ export default class ModalPopup extends React.Component<Props, State> {
     handleCloseModal = () => {
         this.setState({ showModal: false });
     };
-    handleSubmit = (event: React.FormEvent) => 
-    {
+    handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         console.log(this.state.minecraftName);
         //Need to send this.state.minecraftName to SOMETHING so that we can use that data later
-
     };
-    setUsername(minecraftName: string) 
-    {
+    setUsername(minecraftName: string) {
         this.setState({ minecraftName });
     }
 
@@ -41,26 +38,26 @@ export default class ModalPopup extends React.Component<Props, State> {
                     contentLabel="Minimal Modal Example"
                     style={{
                         overlay: { backgroundColor: "grey" },
-                        content:{color: "blue"}
+                        content: { color: "blue" },
                     }}
                 >
                     <button onClick={this.handleCloseModal}>Close Modal</button>
                     <div>
-                                <p>Enter your minecraft username here:</p>
-                                <form id="loginForm" onSubmit={this.handleSubmit}>
-                                    <input
-                                        id="input"
-                                        name="username"
-                                        placeholder="username"
-                                        onChange={event =>
-                                            this.setUsername(event.target.value)
-                                        }
-                                    />
-                                    <button id="btn" type="submit">
-                                        Submit
-                                    </button>
-                                </form>
-                            </div>
+                        <p>Enter your minecraft username here:</p>
+                        <form id="loginForm" onSubmit={this.handleSubmit}>
+                            <input
+                                id="input"
+                                name="username"
+                                placeholder="username"
+                                onChange={(event) =>
+                                    this.setUsername(event.target.value)
+                                }
+                            />
+                            <button id="btn" type="submit">
+                                Submit
+                            </button>
+                        </form>
+                    </div>
                 </ReactModal>
             </div>
         );
@@ -71,5 +68,5 @@ interface Props {}
 
 interface State {
     showModal: Boolean;
-    minecraftName:String;
+    minecraftName: String;
 }
