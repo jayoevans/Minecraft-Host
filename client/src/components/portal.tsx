@@ -24,7 +24,24 @@ export class Portal extends React.Component<Props, State>
             {
                 let uuid;
                 let skin;
-                let URL = "http://localhost:5000/minecraft/user/" +this.state.username;
+                let currentUrl: any = window.location.host.split(":");
+                let regexp = new RegExp("^(?:[0-9]{1,3}.){3}[0-9]{1,3}");
+                let URL:string = "http://localhost:5000/minecraft/user/" +this.state.username;
+                if (regexp.test(currentUrl[0]) || currentUrl[0] == "localhost") 
+                {
+                    console.log(currentUrl[0]);
+                    console.log("Current url [0]");
+                    URL = currentUrl[0];
+                } else if (regexp.test(currentUrl[1]) || currentUrl[1] == "localhost") 
+                {
+                    console.log(currentUrl[1]);
+                    console.log("Current url [1]");
+                    URL = currentUrl[1];
+                } else 
+                {
+                    console.log("Neither " +currentUrl[0] +" or " +currentUrl[1] +" equals a valid IP");
+                }
+                
                 await axios.get(URL)
                     .then((res) => 
                     {

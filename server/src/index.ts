@@ -1,5 +1,5 @@
 import { App } from "./app";
 
-const port: number = parseInt(`${process.env.PORT}`) || 5000;
+const port: number = 8000;
 
 App.listen(port);
