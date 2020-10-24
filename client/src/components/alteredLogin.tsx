@@ -1,6 +1,11 @@
 import React from "react";
 import axios from "axios";
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Redirect,
+} from "react-router-dom";
 import { Portal } from "../components/portal";
 import Account from "../pages/account";
 import Navbar from "./Navbar/navbar";
@@ -50,11 +55,18 @@ export class AlteredLogin extends React.Component<Props, State> {
                     <Navbar />
                     <Switch>
                         <Route exact path="/">
-                            {this.state.loggedIn ? <Redirect to="/home" /> : <Portal/>}
+                            {this.state.loggedIn ? (
+                                <Redirect to="/home" />
+                            ) : (
+                                <Portal />
+                            )}
                         </Route>
-                        <Route path="/home" exact component={Portal} username={this.state.username}>
-                            
-                        </Route>
+                        <Route
+                            path="/home"
+                            exact
+                            component={Portal}
+                            username={this.state.username}
+                        ></Route>
                         <Route path="/account" exact component={Account} />
                     </Switch>
                 </Router>
@@ -65,17 +77,36 @@ export class AlteredLogin extends React.Component<Props, State> {
     handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
 
-        console.log("Submit Form");
-        console.log(this.state);
+        let currentUrl: any = window.location.host.split(":");
+        let regexp = new RegExp("^(?:[0-9]{1,3}.){3}[0-9]{1,3}");
+        let baseURL: string = "";
+        if (regexp.test(currentUrl[0]) || currentUrl[0] == "localhost") 
+        {
+            console.log(currentUrl[0]);
+            console.log("Current url [0]");
+            baseURL = currentUrl[0];
+        } else if (regexp.test(currentUrl[1]) || currentUrl[1] == "localhost") 
+        {
+            console.log(currentUrl[1]);
+            console.log("Current url [1]");
+            baseURL = currentUrl[1];
+        } else 
+        {
+            console.log("Neither " +currentUrl[0] +" or " +currentUrl[1] +" equals a valid IP");
+        }
         const data = this.state;
-        axios
-            .get(`http://localhost:5000/minecraft/user/${data.username}`)
-            .then((res) => {
-                if (res.status == 200) {
-                    if (res.data.Error == "Doesn't exist") {
+        axios.get(`http://${baseURL}:8000/minecraft/user/${data.username}`)
+            .then((res) => 
+            {
+                if (res.status == 200) 
+                {
+                    if (res.data.Error == "Doesn't exist") 
+                    {
                         this.setError("User doesn't exist");
                         this.setUsername("");
-                    } else {
+                    } 
+                    else 
+                    {
                         this.setUuid(res.data.uuid);
                         this.setSkin(res.data.skin);
                         this.setPreviousNames(res.data.previousUserNames);
@@ -84,7 +115,8 @@ export class AlteredLogin extends React.Component<Props, State> {
                 }
                 console.log(res);
             })
-            .catch((err) => {
+            .catch((err) => 
+            {
                 console.log(err);
                 this.setError("Server experiencing trouble, try again later.");
                 this.setUsername("");
@@ -106,8 +138,8 @@ export class AlteredLogin extends React.Component<Props, State> {
     private setError(error: string) {
         this.setState({ error });
     }
-    private setLoggedIn(loggedIn:boolean) {
-        this.setState({loggedIn});
+    private setLoggedIn(loggedIn: boolean) {
+        this.setState({ loggedIn });
     }
 }
 
