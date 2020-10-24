@@ -52,7 +52,7 @@ server.get("/start", (req: express.Request, res: express.Response) =>
 {
     try
     {
-        const serverId = "a0b08af8-1290-11eb-adc1-0242ac120002";
+        const serverId = "f9d954f4-15b3-11eb-adc1-0242ac120002";
 
         const params: AWS.EC2.RunInstancesRequest = {
             ImageId: "ami-047267d2d91b1fe81", // "ami-099c1869f33464fde",

@@ -18,12 +18,15 @@ export namespace UserData
             "echo \"Downloading resources...\"\n" +
             "java -jar Storage-Reader.jar /home/minecraft " + serverId + "\n" +
             "\n" +
-            "cd /home/minecraft\n" +
-            "rm -rf Minecraft-Storage\n" +
-            "\n" +
             "echo \"Starting server...\"\n" +
             "cd /home/minecraft/server\n" +
-            "sh start.sh";
+            "sh start.sh" +
+            "\n" +
+            "cd /home/minecraft/Minecraft-Storage/dist\n" +
+            "chmod +x Storage-Writer.jar\n" +
+            "\n" +
+            "echo \"Saving server...\"\n" +
+            "java -jar Storage-Writer.jar /home/minecraft " + serverId + "\n";
 
         return toBase64(script);
     }
