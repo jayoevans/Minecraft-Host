@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
-import ModalPopup from "./modalPopup"
+import ModalPopup from "./modal-popup"
+import { ServerList } from "./server/server-list";
 
 let previousNames:any = [];
 export class Portal extends React.Component<Props, State> 
@@ -27,12 +28,12 @@ export class Portal extends React.Component<Props, State>
                 let currentUrl: any = window.location.host.split(":");
                 let regexp = new RegExp("^(?:[0-9]{1,3}.){3}[0-9]{1,3}");
                 let URL:string = "http://localhost:5000/minecraft/user/" +this.state.username;
-                if (regexp.test(currentUrl[0]) || currentUrl[0] == "localhost") 
+                if (regexp.test(currentUrl[0]) || currentUrl[0] === "localhost")
                 {
                     console.log(currentUrl[0]);
                     console.log("Current url [0]");
                     URL = currentUrl[0];
-                } else if (regexp.test(currentUrl[1]) || currentUrl[1] == "localhost") 
+                } else if (regexp.test(currentUrl[1]) || currentUrl[1] === "localhost")
                 {
                     console.log(currentUrl[1]);
                     console.log("Current url [1]");
@@ -86,29 +87,30 @@ export class Portal extends React.Component<Props, State>
                                     return(<li key={idx}>{d.name}</li>)
                                 })}
                             </div>
-                            
-                            <div className="savedWorlds">
-                                <h3 id="h3">Saved worlds</h3>
-                                <button>New world</button>
-                            </div>
-                            
-                            <div className="worldDiv">
-                                <div id="img-container">
-                                    <img src={require("../images/WorldPreview.png")}/>
-                                </div>
-                                <div id="info">
-                                    <p>*World Name*</p>
-                                    <div id="buttonDiv">
-                                        <button>Start</button>
-                                        <button>Delete</button>
-                                    </div>
-                                    
-                                </div>
-                                
-                            </div>
-                            <button id="launchServer">
-                                Start my Minecraft server
-                            </button>
+
+                            <ServerList accountId = { "dd578a4f-d35e-4fed-94db-9d5a627ff962" }></ServerList>
+                            {/*<div className="savedWorlds">*/}
+                            {/*    <h3 id="h3">Saved worlds</h3>*/}
+                            {/*    <button>New world</button>*/}
+                            {/*</div>*/}
+                            {/**/}
+                            {/*<div className="worldDiv">*/}
+                            {/*    <div id="img-container">*/}
+                            {/*        <img src={require("../images/WorldPreview.png")}/>*/}
+                            {/*    </div>*/}
+                            {/*    <div id="info">*/}
+                            {/*        <p>*World Name*</p>*/}
+                            {/*        <div id="buttonDiv">*/}
+                            {/*            <button>Start</button>*/}
+                            {/*            <button>Delete</button>*/}
+                            {/*        </div>*/}
+                            {/*        */}
+                            {/*    </div>*/}
+                            {/*    */}
+                            {/*</div>*/}
+                            {/*<button id="launchServer">*/}
+                            {/*    Start my Minecraft server*/}
+                            {/*</button>*/}
                         </div>
                     </article>
                     <article id="rHalf">

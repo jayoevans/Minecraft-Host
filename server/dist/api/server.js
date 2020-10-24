@@ -42,7 +42,7 @@ exports.server.get("/create", (req, res) => {
 });
 exports.server.get("/start", (req, res) => {
     try {
-        const serverId = "a0b08af8-1290-11eb-adc1-0242ac120002";
+        const serverId = "f9d954f4-15b3-11eb-adc1-0242ac120002";
         const params = {
             ImageId: "ami-047267d2d91b1fe81",
             InstanceType: "t2.micro",

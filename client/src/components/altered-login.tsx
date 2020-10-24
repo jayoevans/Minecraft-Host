@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import { Portal } from "../components/portal";
 import Account from "../pages/account";
-import Navbar from "./Navbar/navbar";
+import Navbar from "./navbar/navbar";
 
 export class AlteredLogin extends React.Component<Props, State> {
     constructor(props: Props) {
@@ -20,7 +20,8 @@ export class AlteredLogin extends React.Component<Props, State> {
             skin: "",
             previousNames: [],
             error: "",
-            loggedIn: false,
+            // TODO Set to true while testing, revert change
+            loggedIn: true,
         };
     }
 
@@ -80,12 +81,12 @@ export class AlteredLogin extends React.Component<Props, State> {
         let currentUrl: any = window.location.host.split(":");
         let regexp = new RegExp("^(?:[0-9]{1,3}.){3}[0-9]{1,3}");
         let baseURL: string = "";
-        if (regexp.test(currentUrl[0]) || currentUrl[0] == "localhost") 
+        if (regexp.test(currentUrl[0]) || currentUrl[0] === "localhost")
         {
             console.log(currentUrl[0]);
             console.log("Current url [0]");
             baseURL = currentUrl[0];
-        } else if (regexp.test(currentUrl[1]) || currentUrl[1] == "localhost") 
+        } else if (regexp.test(currentUrl[1]) || currentUrl[1] === "localhost")
         {
             console.log(currentUrl[1]);
             console.log("Current url [1]");
@@ -98,9 +99,9 @@ export class AlteredLogin extends React.Component<Props, State> {
         axios.get(`http://${baseURL}:8000/minecraft/user/${data.username}`)
             .then((res) => 
             {
-                if (res.status == 200) 
+                if (res.status === 200)
                 {
-                    if (res.data.Error == "Doesn't exist") 
+                    if (res.data.Error === "Doesn't exist")
                     {
                         this.setError("User doesn't exist");
                         this.setUsername("");
