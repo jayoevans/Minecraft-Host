@@ -3,7 +3,7 @@ import { ServerState } from "./server-state";
 
 export class ServerUtil
 {
-    public static startServer(serverInfo: ServerInfo): ServerState
+    public static async startServer(serverInfo: ServerInfo): Promise<ServerState>
     {
         if (serverInfo.serverState !== ServerState.OFFLINE)
         {
@@ -13,8 +13,29 @@ export class ServerUtil
 
         const serverId = serverInfo.serverId;
 
-        // TODO Create instance
         console.log(`Starting server ${serverId}...`);
+
+        try
+        {
+            const request: RequestInit = {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ "serverId": serverInfo.serverId })
+            };
+
+            const response = await fetch("http://localhost:8000/server/start", request);
+
+            const data = await response.json();
+
+            console.log("status code: " + response.status);
+            console.log("data: " + JSON.stringify(data));
+
+            serverInfo.instanceId = data.instanceId;
+        }
+        catch (e)
+        {
+            console.error(e, e.stack);
+        }
 
         // TODO Make requests to AWS to update state
         return serverInfo.serverState = ServerState.STARTING;

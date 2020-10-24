@@ -55,16 +55,19 @@ export class Server extends React.Component<Props, State>
 
     startServer = (event: React.FormEvent) =>
     {
-        this.setState({ serverState: ServerUtil.startServer(this.props.serverInfo) });
+        this.setState({ serverState: ServerState.STARTING });
 
-        setTimeout(() => this.setState({ serverState: ServerState.ONLINE }), 2000);
+        ServerUtil.startServer(this.props.serverInfo).then(() =>
+        {
+            this.setState({ serverState: ServerState.ONLINE });
+        });
     };
 
     stopServer = (event: React.FormEvent) =>
     {
-        this.setState({ serverState: ServerUtil.stopServer(this.props.serverInfo) });
+        this.setState({ serverState: ServerState.STOPPING });
 
-        setTimeout(() => this.setState({ serverState: ServerState.OFFLINE }), 2000);
+        ServerUtil.stopServer(this.props.serverInfo);
     };
 }
 

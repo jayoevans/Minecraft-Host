@@ -51,7 +51,6 @@ export class ServerList extends React.Component<Props, State>
             items.push(element);
         }
 
-
         return (
             <div>
                 { items }

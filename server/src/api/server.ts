@@ -1,6 +1,5 @@
 import express from "express";
 import AWS from "aws-sdk";
-import { toBase64 } from "js-base64";
 import { UserData } from "../aws/user-data";
 
 AWS.config.update({ region: "ap-southeast-2" });
@@ -48,11 +47,11 @@ server.get("/create", (req: express.Request, res: express.Response) =>
     }
 });
 
-server.get("/start", (req: express.Request, res: express.Response) =>
+server.post("/start", (req: express.Request, res: express.Response) =>
 {
     try
     {
-        const serverId = "f9d954f4-15b3-11eb-adc1-0242ac120002";
+        const serverId = req.body.serverId;
 
         const params: AWS.EC2.RunInstancesRequest = {
             ImageId: "ami-047267d2d91b1fe81", // "ami-099c1869f33464fde",
@@ -93,7 +92,7 @@ server.get("/start", (req: express.Request, res: express.Response) =>
 
                 const instanceId = data.Instances[0].InstanceId!;
 
-                res.send("Instance: " + instanceId);
+                res.json({ instanceId });
             })
             .catch(error =>
             {

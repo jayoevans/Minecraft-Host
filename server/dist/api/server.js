@@ -40,9 +40,9 @@ exports.server.get("/create", (req, res) => {
         console.error(e);
     }
 });
-exports.server.get("/start", (req, res) => {
+exports.server.post("/start", (req, res) => {
     try {
-        const serverId = "f9d954f4-15b3-11eb-adc1-0242ac120002";
+        const serverId = req.body.serverId;
         const params = {
             ImageId: "ami-047267d2d91b1fe81",
             InstanceType: "t2.micro",
@@ -74,7 +74,7 @@ exports.server.get("/start", (req, res) => {
                 return;
             }
             const instanceId = data.Instances[0].InstanceId;
-            res.send("Instance: " + instanceId);
+            res.json({ instanceId });
         })
             .catch(error => {
             console.error(error, error.stack);
