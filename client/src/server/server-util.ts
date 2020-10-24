@@ -17,7 +17,7 @@ export class ServerUtil
         console.log(`Starting server ${serverId}...`);
 
         // TODO Make requests to AWS to update state
-        return serverInfo.serverState = ServerState.ONLINE;
+        return serverInfo.serverState = ServerState.STARTING;
     }
 
     public static stopServer(serverInfo: ServerInfo): ServerState
@@ -34,6 +34,6 @@ export class ServerUtil
         console.log(`Stopping server ${instanceId}...`);
 
         // TODO Make requests to AWS to update state
-        return serverInfo.serverState = ServerState.OFFLINE;
+        return serverInfo.serverState = ServerState.STOPPING;
     }
 }
