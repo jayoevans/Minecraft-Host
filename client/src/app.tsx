@@ -3,11 +3,11 @@ import { AccountInfo } from "./login/account-info";
 import { Portal } from "./components/portal";
 import { Login } from "./components/login";
 
-export class App extends React.Component<{}, State>
+export class App extends React.Component<Props, State>
 {
-    constructor()
+    constructor(props: Props)
     {
-        super({});
+        super(props);
 
         this.state = {};
     }
@@ -25,6 +25,11 @@ export class App extends React.Component<{}, State>
     {
         this.setState({ accountInfo });
     };
+}
+
+interface Props
+{
+
 }
 
 interface State
