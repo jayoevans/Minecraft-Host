@@ -1,5 +1,4 @@
 import { ServerInfo } from "./server-info";
-import { ServerState } from "./server-state";
 
 export class ServerUtil
 {
@@ -62,16 +61,12 @@ export class ServerUtil
             console.error(e, e.stack);
             return undefined;
         }
-
-        // TODO Make requests to AWS to update state
     }
 
     public static async stopServer(serverInfo: ServerInfo): Promise<void>
     {
         const serverId = serverInfo.serverId;
         const instanceId = serverInfo.instanceId;
-
-        // TODO Stop servers
 
         try
         {

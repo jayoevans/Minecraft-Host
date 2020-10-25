@@ -1,17 +1,19 @@
 import React from "react";
-import axios from "axios";
+import { AccountInfo } from "../login/account-info";
 
-export class Login extends React.Component<Props, State> {
-    constructor(props: Props) {
+export class Login extends React.Component<Props, State>
+{
+    constructor(props: Props)
+    {
         super(props);
 
         this.state = {
-            username: "",
-            password: "",
+            username: ""
         };
     }
 
-    render() {
+    render()
+    {
         return (
             <div id="loginContainer" className="loginPage">
                 <h1 id="h1">Login</h1>
@@ -20,70 +22,59 @@ export class Login extends React.Component<Props, State> {
                         <input
                             id="input"
                             name="username"
-                            placeholder="username"
+                            placeholder="Minecraft Username"
                             value={this.state.username}
-                            onChange={ event => this.setUsername(event.target.value)
-                            }
+                            onChange={ event => this.setUsername(event.target.value) }
                         />
                     </div>
 
-                    <div>
-                        <input
-                            id="input"
-                            name="password"
-                            type="password"
-                            placeholder="password"
-                            value={this.state.password}
-                            onChange={(event) =>
-                                this.setPassword(event.target.value)
-                            }
-                        />
-                    </div>
-
-                    <button id="btn" type="submit">
-                        Submit
-                    </button>
-                    <p>test</p>
+                    <button id="btn" type="submit">Submit</button>
+                    <p>{ this.state.error }</p>
                 </form>
             </div>
         );
     }
 
-    handleSubmit = (event: React.FormEvent) => {
+    handleSubmit = async (event: React.FormEvent) =>
+    {
         event.preventDefault();
 
-        console.log("Submit Form");
-        console.log(this.state);
-        const data = this.state;
-        axios
-            .post("http://localhost:5000/login", { data })
-            .then((res) => {
-                if(res.status == 200)
-                {
-                    //Change page?
-                }
-                else
-                {
-                    //Change the error
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        const response = await fetch(`http://localhost:8000/minecraft/user/${this.state.username}`);
+        const data = await response.json();
+
+        if (data.Error)
+        {
+            this.setState({ error: data.Error });
+            return;
+        }
+
+        const nameHistory: string[] = data.previousUserNames.map(entry =>
+        {
+            return entry.name;
+        });
+
+        const accountInfo: AccountInfo = {
+            uuid: data.uuid,
+            skin: data.skin,
+            nameHistory
+        };
+
+        this.props.setAccountInfo(accountInfo);
     };
 
-    private setUsername(username: string) {
+    private setUsername(username: string)
+    {
         this.setState({ username });
-    }
-
-    private setPassword(password: string) {
-        this.setState({ password });
     }
 }
 
-interface Props {}
+interface Props
+{
+    setAccountInfo: (accountInfo: AccountInfo) => any;
+}
 
-interface State {
+interface State
+{
     username: string;
-    password: string;
+    error?: string;
 }
