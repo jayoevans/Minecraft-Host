@@ -7,7 +7,7 @@ var UserData;
     function get(serverId) {
         const script = "#!/bin/bash\n" +
             "\n" +
-            "InstanceId = $(curl -s http://169.254.169.254/latest/meta-data/instance-id)\n" +
+            "InstanceId=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)\n" +
             "\n" +
             "mkdir /home/minecraft\n" +
             "cd /home/minecraft\n" +
@@ -31,7 +31,9 @@ var UserData;
             "echo \"Saving server...\"\n" +
             "java -jar Storage-Writer.jar /home/minecraft " + serverId + "\n" +
             "\n" +
-            "aws ec2 terminate-instances --instance-ids \"$InstanceId\"";
+            "aws sts get-caller-identity\n" +
+            "echo \"Terminating instance $InstanceId\"\n" +
+            "aws ec2 terminate-instances --instance-ids \"$InstanceId\" --region ap-southeast-2";
         return js_base64_1.toBase64(script);
     }
     UserData.get = get;

@@ -3,6 +3,38 @@ import { ServerState } from "./server-state";
 
 export class ServerUtil
 {
+    public static async getPublicIp(serverInfo: ServerInfo): Promise<string | undefined>
+    {
+        const instanceId = serverInfo.instanceId;
+
+        if (!instanceId)
+        {
+            return undefined;
+        }
+
+        const response = await fetch(`http://localhost:8000/servers/host/${instanceId}`);
+
+        const data = await response.json();
+
+        return data.publicIp;
+    }
+
+    public static async getServerStatus(serverInfo: ServerInfo): Promise<string | undefined>
+    {
+        const instanceId = serverInfo.instanceId;
+
+        if (!instanceId)
+        {
+            return undefined;
+        }
+
+        const response = await fetch(`http://localhost:8000/servers/status/${instanceId}`);
+
+        const data = await response.json();
+
+        return data.status;
+    }
+
     public static async startServer(serverInfo: ServerInfo): Promise<ServerState>
     {
         if (serverInfo.serverState !== ServerState.OFFLINE)
@@ -12,8 +44,6 @@ export class ServerUtil
         }
 
         const serverId = serverInfo.serverId;
-
-        console.log(`Starting server ${serverId}...`);
 
         try
         {
@@ -52,7 +82,6 @@ export class ServerUtil
         const instanceId = serverInfo.instanceId;
 
         // TODO Stop servers
-        console.log(`Stopping server ${instanceId}...`);
 
         try
         {

@@ -20,7 +20,6 @@ export class AlteredLogin extends React.Component<Props, State> {
             skin: "",
             previousNames: [],
             error: "",
-            // TODO Set to true while testing, revert change
             loggedIn: false,
         };
     }

@@ -32,7 +32,10 @@ export class Server extends React.Component<Props, State>
         {
             case ServerState.ONLINE:
                 return (
-                    <button onClick = { this.stopServer }>Stop</button>
+                    <div>
+                        <button onClick = { this.stopServer }>Stop</button>
+                        <p>IP: { this.state.publicIp }</p>
+                    </div>
                 );
             case ServerState.STARTING:
                 return (
@@ -57,17 +60,43 @@ export class Server extends React.Component<Props, State>
     {
         this.setState({ serverState: ServerState.STARTING });
 
-        ServerUtil.startServer(this.props.serverInfo).then(() =>
+        ServerUtil.startServer(this.props.serverInfo).then(async () =>
         {
-            this.setState({ serverState: ServerState.ONLINE });
+            console.log(`Starting server ${ this.props.serverInfo.serverId }...`);
+
+            while (!this.state.publicIp)
+            {
+                ServerUtil.getServerStatus(this.props.serverInfo).then(status =>
+                {
+                    if (status !== "ok")
+                    {
+                        return;
+                    }
+
+                    ServerUtil.getPublicIp(this.props.serverInfo).then(publicIp =>
+                    {
+                        this.setState({ serverState: ServerState.ONLINE, publicIp: publicIp! });
+                    });
+                });
+
+                await this.sleep(10000);
+            }
         });
     };
+
+    private sleep(ms: number)
+    {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
 
     stopServer = (event: React.FormEvent) =>
     {
         this.setState({ serverState: ServerState.STOPPING });
 
-        ServerUtil.stopServer(this.props.serverInfo);
+        ServerUtil.stopServer(this.props.serverInfo).then(() =>
+        {
+            console.log(`Stopping server ${ this.props.serverInfo.serverId }...`);
+        });
     };
 }
 
@@ -79,4 +108,5 @@ interface Props
 interface State
 {
     serverState: ServerState;
+    publicIp?: string;
 }

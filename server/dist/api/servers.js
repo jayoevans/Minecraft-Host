@@ -30,6 +30,54 @@ exports.servers.get("/:accountId", (req, res) => {
 });
 exports.servers.get("/status/:instanceId", (req, res) => {
     try {
+        const instanceId = req.params.instanceId;
+        const request = {
+            InstanceIds: [instanceId]
+        };
+        EC2.describeInstanceStatus(request).promise()
+            .then(data => {
+            console.log(JSON.stringify(data));
+            const statuses = data.InstanceStatuses;
+            if (!statuses || statuses.length === 0) {
+                return;
+            }
+            const instanceStatus = statuses[0].InstanceStatus;
+            if (!instanceStatus) {
+                return;
+            }
+            res.json({ status: instanceStatus.Status });
+        })
+            .catch(error => {
+            console.error(error, error.stack);
+        });
+    }
+    catch (e) {
+        res.status(501);
+    }
+});
+exports.servers.get("/host/:instanceId", (req, res) => {
+    try {
+        const instanceId = req.params.instanceId;
+        const request = {
+            InstanceIds: [instanceId]
+        };
+        EC2.describeInstances(request).promise()
+            .then(data => {
+            console.log(JSON.stringify(data));
+            const reservations = data.Reservations;
+            if (!reservations) {
+                return;
+            }
+            const instances = reservations[0].Instances;
+            if (!instances) {
+                return;
+            }
+            const publicIp = instances[0].PublicIpAddress;
+            res.json({ publicIp });
+        })
+            .catch(error => {
+            console.error(error, error.stack);
+        });
     }
     catch (e) {
         res.status(501);
