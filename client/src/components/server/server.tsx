@@ -55,7 +55,10 @@ export class Server extends React.Component<Props, State>
                 );
             case ServerState.OFFLINE:
                 return (
-                    <button onClick = { this.startServer }>Start</button>
+                    <div>
+                        <button onClick = { this.startServer }>Start</button>
+                        <button onClick = { this.deleteServer }>Delete Server</button>
+                    </div>
                 );
             default:
                 return (
@@ -113,11 +116,17 @@ export class Server extends React.Component<Props, State>
             this.setState({ serverState: ServerState.OFFLINE });
         });
     };
+
+    deleteServer = (event: React.FormEvent) =>
+    {
+        this.props.deleteServer(this.props.serverInfo);
+    };
 }
 
 interface Props
 {
     serverInfo: ServerInfo;
+    deleteServer: (serverInfo: ServerInfo) => void;
 }
 
 interface State

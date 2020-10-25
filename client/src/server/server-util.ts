@@ -90,4 +90,54 @@ export class ServerUtil
             console.error(e, e.stack);
         }
     }
+
+    public static async createServer(accountId: string, serverName: string): Promise<ServerInfo | undefined>
+    {
+        try
+        {
+            const request: RequestInit = {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ accountId, serverName })
+            };
+
+            console.log("request: " + JSON.stringify(request));
+
+            const response = await fetch("http://localhost:8000/servers/create", request);
+
+            const data = await response.json();
+
+            const serverId = data.serverId;
+
+            return { serverId, serverName };
+        }
+        catch (e)
+        {
+            console.error(e, e.stack);
+            return undefined;
+        }
+    }
+
+    public static async deleteServer(serverId: string): Promise<boolean>
+    {
+        try
+        {
+            const request: RequestInit = {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ serverId })
+            };
+
+            const response = await fetch("http://localhost:8000/servers/delete", request);
+
+            const data = await response.json();
+
+            return data.deleted;
+        }
+        catch (e)
+        {
+            console.error(e, e.stack);
+            return false;
+        }
+    }
 }

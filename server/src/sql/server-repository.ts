@@ -23,7 +23,7 @@ export class ServerRepository
 {
     public init()
     {
-        this.selectServers("dd578a4f-d35e-4fed-94db-9d5a627ff962").then(servers =>
+        this.selectServers("dd578a4fd35e4fed94db9d5a627ff962").then(servers =>
         {
             console.log(servers);
         });

@@ -130,6 +130,8 @@ servers.post("/create", (req: express.Request, res: express.Response) =>
         const serverId = uuid();
         const serverName = req.body.serverName;
 
+        console.log(`accountId=${accountId}, serverId=${serverId}, serverName=${serverName}`);
+
         repository.insertServer(accountId, serverId, serverName);
 
         res.json({ serverId });
@@ -148,7 +150,7 @@ servers.post("/delete", (req: express.Request, res: express.Response) =>
 
         repository.deleteServer(serverId);
 
-        res.status(200);
+        res.status(200).json({ deleted: true});
     }
     catch (e)
     {

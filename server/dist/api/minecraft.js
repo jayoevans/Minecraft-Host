@@ -39,6 +39,7 @@ exports.minecraft.get("/user/:id", (req, res) => __awaiter(void 0, void 0, void 
         .get(URL)
         .then(function (response) {
         if (response.data) {
+            console.log(JSON.stringify(response.data));
             newUser.username = response.data.name;
             newUser.uuid = response.data.id;
         }

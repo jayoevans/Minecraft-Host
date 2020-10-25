@@ -1,6 +1,7 @@
 import React from "react";
 import { Server } from "./server";
 import { ServerInfo } from "../../server/server-info";
+import { ServerUtil } from "../../server/server-util";
 
 export class ServerList extends React.Component<Props, State>
 {
@@ -19,12 +20,13 @@ export class ServerList extends React.Component<Props, State>
 
         for (const serverInfo of this.state.servers)
         {
-            const element = <Server key = { serverInfo.serverId } serverInfo = { serverInfo }/>
+            const element = <Server key = { serverInfo.serverId } serverInfo = { serverInfo } deleteServer = { this.deleteServer }/>
             items.push(element);
         }
 
         return (
             <div>
+                <button onClick = { this.createServer }>Create Server</button>
                 { items }
             </div>
         );
@@ -49,6 +51,45 @@ export class ServerList extends React.Component<Props, State>
 
                 this.setState({ servers });
             });
+    }
+
+    createServer = (event: React.FormEvent) =>
+    {
+        ServerUtil.createServer(this.props.accountId, "Minecraft Server").then(serverInfo =>
+        {
+            if (!serverInfo)
+            {
+                return;
+            }
+
+            const servers = this.state.servers;
+
+            servers.push(serverInfo);
+
+            this.setState({ servers });
+        });
+    };
+
+    deleteServer = (serverInfo: ServerInfo) =>
+    {
+        ServerUtil.deleteServer(serverInfo.serverId).then(success =>
+        {
+            if (!success)
+            {
+                return;
+            }
+
+            const servers = this.state.servers;
+
+            const index = servers.indexOf(serverInfo);
+
+            if (index >= 0)
+            {
+                servers.splice(index, 1);
+            }
+
+            this.setState({ servers });
+        });
     }
 }
 

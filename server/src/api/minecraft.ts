@@ -32,6 +32,7 @@ minecraft.get("/user/:id",async (req: express.Request, res: express.Response) =>
             .get(URL)
             .then(function (response) {
                 if (response.data) {
+                    console.log(JSON.stringify(response.data));
                     newUser.username = response.data.name;
                     newUser.uuid = response.data.id;
                 } else {

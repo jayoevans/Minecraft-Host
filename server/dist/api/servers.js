@@ -88,6 +88,7 @@ exports.servers.post("/create", (req, res) => {
         const accountId = req.body.accountId;
         const serverId = uuid_random_1.default();
         const serverName = req.body.serverName;
+        console.log(`accountId=${accountId}, serverId=${serverId}, serverName=${serverName}`);
         repository.insertServer(accountId, serverId, serverName);
         res.json({ serverId });
     }
@@ -99,7 +100,7 @@ exports.servers.post("/delete", (req, res) => {
     try {
         const serverId = req.body.serverId;
         repository.deleteServer(serverId);
-        res.status(200);
+        res.status(200).json({ deleted: true });
     }
     catch (e) {
         res.status(500);
