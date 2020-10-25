@@ -18,7 +18,7 @@ export class App extends React.Component<Props, State>
     {
         return (
             <div>
-                { this.state.accountInfo ? <Portal/> : <Login setAccountInfo = { this.setAccountInfo }/> }
+                { this.state.accountInfo ? <Portal username = { this.state.username } accountInfo = { this.state.accountInfo }/> : <Login setAccountInfo = { this.setAccountInfo }/> }
             </div>
         );
     }
