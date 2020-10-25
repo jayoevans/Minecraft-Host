@@ -6,6 +6,8 @@ export namespace UserData
     {
         const script = "#!/bin/bash\n" +
             "\n" +
+            "InstanceId = $(curl -s http://169.254.169.254/latest/meta-data/instance-id)\n" +
+            "\n" +
             "mkdir /home/minecraft\n" +
             "cd /home/minecraft\n" +
             "\n" +
@@ -26,7 +28,9 @@ export namespace UserData
             "chmod +x Storage-Writer.jar\n" +
             "\n" +
             "echo \"Saving server...\"\n" +
-            "java -jar Storage-Writer.jar /home/minecraft " + serverId + "\n";
+            "java -jar Storage-Writer.jar /home/minecraft " + serverId + "\n" +
+            "\n" +
+            "aws ec2 terminate-instances --instance-ids \"$InstanceId\"";
 
         return toBase64(script);
     }

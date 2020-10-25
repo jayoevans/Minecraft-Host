@@ -88,7 +88,7 @@ export class Portal extends React.Component<Props, State>
                                 })}
                             </div>
 
-                            <ServerList accountId = { "dd578a4f-d35e-4fed-94db-9d5a627ff962" }></ServerList>
+                            <ServerList accountId = { "dd578a4f-d35e-4fed-94db-9d5a627ff962" }/>
                             {/*<div className="savedWorlds">*/}
                             {/*    <h3 id="h3">Saved worlds</h3>*/}
                             {/*    <button>New world</button>*/}
@@ -109,7 +109,7 @@ export class Portal extends React.Component<Props, State>
                             {/*    */}
                             {/*</div>*/}
                             {/*<button id="launchServer">*/}
-                            {/*    Start my Minecraft server*/}
+                            {/*    Start my Minecraft servers*/}
                             {/*</button>*/}
                         </div>
                     </article>

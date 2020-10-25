@@ -21,7 +21,7 @@ export class AlteredLogin extends React.Component<Props, State> {
             previousNames: [],
             error: "",
             // TODO Set to true while testing, revert change
-            loggedIn: true,
+            loggedIn: false,
         };
     }
 

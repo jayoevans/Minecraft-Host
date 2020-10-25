@@ -7,6 +7,7 @@ exports.server = void 0;
 const express_1 = __importDefault(require("express"));
 const aws_sdk_1 = __importDefault(require("aws-sdk"));
 const user_data_1 = require("../aws/user-data");
+const server_repository_1 = require("../sql/server-repository");
 aws_sdk_1.default.config.update({ region: "ap-southeast-2" });
 const EC2 = new aws_sdk_1.default.EC2({ apiVersion: "2016-11-15" });
 const EBS = new aws_sdk_1.default.EBS({ apiVersion: "2019-11-02" });
@@ -107,6 +108,7 @@ exports.server.get("/attach/:instanceId/:volumeId", (req, res) => {
 });
 exports.server.get("/", (req, res) => {
     try {
+        new server_repository_1.ServerRepository();
     }
     catch (e) {
         console.error(e);
@@ -129,4 +131,4 @@ exports.server.get("/:instanceId", (req, res) => {
         console.error(e);
     }
 });
-//# sourceMappingURL=server.js.map
+//# sourceMappingURL=servers.js.map
