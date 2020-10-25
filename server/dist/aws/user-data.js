@@ -7,6 +7,8 @@ var UserData;
     function get(serverId) {
         const script = "#!/bin/bash\n" +
             "\n" +
+            "InstanceId = $(curl -s http://169.254.169.254/latest/meta-data/instance-id)\n" +
+            "\n" +
             "mkdir /home/minecraft\n" +
             "cd /home/minecraft\n" +
             "\n" +
@@ -27,7 +29,9 @@ var UserData;
             "chmod +x Storage-Writer.jar\n" +
             "\n" +
             "echo \"Saving server...\"\n" +
-            "java -jar Storage-Writer.jar /home/minecraft " + serverId + "\n";
+            "java -jar Storage-Writer.jar /home/minecraft " + serverId + "\n" +
+            "\n" +
+            "aws ec2 terminate-instances --instance-ids \"$InstanceId\"";
         return js_base64_1.toBase64(script);
     }
     UserData.get = get;

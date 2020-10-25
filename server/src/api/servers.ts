@@ -87,7 +87,7 @@ servers.post("/start", (req: express.Request, res: express.Response) =>
         const serverId = req.body.serverId;
 
         const params: AWS.EC2.RunInstancesRequest = {
-            ImageId: "ami-047267d2d91b1fe81",
+            ImageId: "ami-0d7080d0911146a1b", // ami-047267d2d91b1fe81 (JUST JAVA)
             InstanceType: "t2.micro",
             MinCount: 1,
             MaxCount: 1,

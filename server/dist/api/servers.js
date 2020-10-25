@@ -61,7 +61,7 @@ exports.servers.post("/start", (req, res) => {
     try {
         const serverId = req.body.serverId;
         const params = {
-            ImageId: "ami-047267d2d91b1fe81",
+            ImageId: "ami-0d7080d0911146a1b",
             InstanceType: "t2.micro",
             MinCount: 1,
             MaxCount: 1,
