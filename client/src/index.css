@@ -5,6 +5,7 @@
   padding: 0; */
 }
 
+
 html, body{
   height: 100%;
   width: 100%;
@@ -24,12 +25,13 @@ html, body{
 }
 #portalContainer{
   /* background-color: green; */
+  height: 91%;
+    background-image: url("D:/Uni/Cab432-CloudComputing/Assignment2/Minecraft-Host/client/src/images/Minecraft-Background-Image.jpg");
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center; 
   background-color:  #282c34;
-  border-radius: 20px;
 }
 .savedWorlds{
   display: inline-flex;
@@ -89,9 +91,12 @@ html, body{
 }
 .portal #splitDiv{
   background-color: #30343b;
+  opacity: 0.9;
   box-shadow: 0 3px 15px rgba(0, 0, 0, 0.5);
-  height: 100%;
-  width: 80%;
+  /* height: 100%; */
+  width: 60%;
+  min-width: 650px;
+  
 }
 
 .portal #infoDiv{

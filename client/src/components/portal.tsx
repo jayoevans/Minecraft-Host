@@ -74,8 +74,8 @@ export class Portal extends React.Component<Props, State>
         return (
             
             <div id="portalContainer" className="portal">
-                <ModalPopup/>
-                <h1>Portal</h1>
+                {/* <ModalPopup/> */}
+                {/* <h1>Portal</h1> */}
                 <div id="splitDiv">
                     <article id="lHalf">
                         <div id="infoDiv">
