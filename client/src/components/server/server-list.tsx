@@ -1,7 +1,6 @@
 import React from "react";
 import { Server } from "./server";
 import { ServerInfo } from "../../server/server-info";
-import { ServerState } from "../../server/server-state";
 
 export class ServerList extends React.Component<Props, State>
 {

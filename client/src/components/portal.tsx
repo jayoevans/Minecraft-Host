@@ -32,7 +32,7 @@ export class Portal extends React.Component<Props, State>
                             </div>
 
                             <h3 id="h3">Servers</h3>
-                            <ServerList accountId = { "dd578a4f-d35e-4fed-94db-9d5a627ff962" }/>
+                            <ServerList accountId = { this.props.accountInfo.uuid }/>
                         </div>
                     </article>
                     <article id="rHalf">
