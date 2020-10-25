@@ -37,12 +37,7 @@ export class ServerUtil
 
     public static async startServer(serverInfo: ServerInfo): Promise<string | undefined>
     {
-        if (serverInfo.serverState !== ServerState.OFFLINE)
-        {
-            // Server must be offline to start
-            return undefined;
-        }
-
+        const serverName = serverInfo.serverName;
         const serverId = serverInfo.serverId;
 
         try
@@ -50,7 +45,7 @@ export class ServerUtil
             const request: RequestInit = {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ serverId })
+                body: JSON.stringify({ serverName, serverId })
             };
 
             const response = await fetch("http://localhost:8000/servers/start", request);
@@ -73,12 +68,6 @@ export class ServerUtil
 
     public static async stopServer(serverInfo: ServerInfo): Promise<void>
     {
-        if (serverInfo.serverState !== ServerState.ONLINE)
-        {
-            // Server must be online to stop
-            return;
-        }
-
         const serverId = serverInfo.serverId;
         const instanceId = serverInfo.instanceId;
 

@@ -14,7 +14,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ServerRepository = void 0;
 const mysql_1 = __importDefault(require("mysql"));
-const server_state_1 = require("../server/server-state");
 const CREATE_TABLE = "CREATE TABLE servers (accountId CHAR(36) NOT NULL, serverId CHAR(36) NOT NULL, serverName VARCHAR(50) NOT NULL, instanceId VARCHAR(50), INDEX accountIndex (accountId), UNIQUE INDEX serverIndex (serverId));";
 const DROP_TABLE = "DROP TABLE servers";
 const SELECT_SERVERS = "SELECT serverId, serverName, instanceId FROM servers WHERE accountId = ?;";
@@ -49,7 +48,7 @@ class ServerRepository {
                 const serverId = result.serverId;
                 const serverName = result.serverName;
                 const instanceId = result.instanceId;
-                servers.push({ serverId, serverName, serverState: server_state_1.ServerState.OFFLINE, instanceId });
+                servers.push({ serverId, serverName, instanceId });
             }
             return servers;
         });

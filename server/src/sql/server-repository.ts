@@ -1,6 +1,5 @@
 import mysql from "mysql";
 import { ServerInfo } from "../server/server-info";
-import { ServerState } from "../server/server-state";
 
 const CREATE_TABLE: string = "CREATE TABLE servers (accountId CHAR(36) NOT NULL, serverId CHAR(36) NOT NULL, serverName VARCHAR(50) NOT NULL, instanceId VARCHAR(50), INDEX accountIndex (accountId), UNIQUE INDEX serverIndex (serverId));";
 const DROP_TABLE: string = "DROP TABLE servers";
@@ -53,7 +52,7 @@ export class ServerRepository
             const serverName = result.serverName;
             const instanceId = result.instanceId;
 
-            servers.push({ serverId, serverName, serverState: ServerState.OFFLINE, instanceId });
+            servers.push({ serverId, serverName, instanceId });
         }
 
         return servers;

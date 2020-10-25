@@ -161,6 +161,7 @@ servers.post("/start", (req: express.Request, res: express.Response) =>
     try
     {
         const serverId = req.body.serverId;
+        const serverName = req.body.serverName;
 
         const params: AWS.EC2.RunInstancesRequest = {
             ImageId: "ami-0d7080d0911146a1b", // ami-047267d2d91b1fe81 (JUST JAVA)
@@ -175,6 +176,10 @@ servers.post("/start", (req: express.Request, res: express.Response) =>
                 {
                     ResourceType: "instance",
                     Tags: [
+                        {
+                            Key: "Name",
+                            Value: serverName
+                        },
                         {
                             Key: "qut-username",
                             Value: "10413316"

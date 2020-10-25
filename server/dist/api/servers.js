@@ -108,6 +108,7 @@ exports.servers.post("/delete", (req, res) => {
 exports.servers.post("/start", (req, res) => {
     try {
         const serverId = req.body.serverId;
+        const serverName = req.body.serverName;
         const params = {
             ImageId: "ami-0d7080d0911146a1b",
             InstanceType: "t2.micro",
@@ -121,6 +122,10 @@ exports.servers.post("/start", (req, res) => {
                 {
                     ResourceType: "instance",
                     Tags: [
+                        {
+                            Key: "Name",
+                            Value: serverName
+                        },
                         {
                             Key: "qut-username",
                             Value: "10413316"

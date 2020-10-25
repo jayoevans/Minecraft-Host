@@ -83,8 +83,6 @@ export class Server extends React.Component<Props, State>
         {
             ServerUtil.getServerStatus(this.props.serverInfo).then(status =>
             {
-                console.log(this.props.serverInfo.serverName + " requesting");
-
                 if (status !== "ok")
                 {
                     return;

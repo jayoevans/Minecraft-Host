@@ -45,7 +45,7 @@ export class ServerList extends React.Component<Props, State>
                     const serverName = server.serverName;
                     const instanceId = server.instanceId;
 
-                    servers.push({ serverId, serverName, serverState: ServerState.OFFLINE, instanceId });
+                    servers.push({ serverId, serverName, instanceId });
                 }
 
                 this.setState({ servers });
