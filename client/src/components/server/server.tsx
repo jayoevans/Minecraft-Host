@@ -10,7 +10,7 @@ export class Server extends React.Component<Props, State>
         super(props);
 
         this.state = {
-            serverState: ServerState.OFFLINE
+            serverState: props.serverInfo.instanceId ? ServerState.STARTING : ServerState.OFFLINE
         };
     }
 
@@ -24,6 +24,14 @@ export class Server extends React.Component<Props, State>
                 </div>
             </div>
         );
+    }
+
+    async componentDidMount()
+    {
+        if (this.props.serverInfo.instanceId)
+        {
+            await this.waitForIp().then(() => {});
+        }
     }
 
     private getElement(): JSX.Element
@@ -60,28 +68,36 @@ export class Server extends React.Component<Props, State>
     {
         this.setState({ serverState: ServerState.STARTING });
 
-        ServerUtil.startServer(this.props.serverInfo).then(async () =>
+        ServerUtil.startServer(this.props.serverInfo).then(async instanceId =>
         {
             console.log(`Starting server ${ this.props.serverInfo.serverId }...`);
+            console.log(`instanceId ${instanceId}`);
 
-            while (!this.state.publicIp)
-            {
-                ServerUtil.getServerStatus(this.props.serverInfo).then(status =>
-                {
-                    if (status !== "ok")
-                    {
-                        return;
-                    }
-
-                    ServerUtil.getPublicIp(this.props.serverInfo).then(publicIp =>
-                    {
-                        this.setState({ serverState: ServerState.ONLINE, publicIp: publicIp! });
-                    });
-                });
-
-                await this.sleep(10000);
-            }
+            await this.waitForIp();
         });
+    };
+
+    waitForIp = async () =>
+    {
+        while (!this.state.publicIp)
+        {
+            ServerUtil.getServerStatus(this.props.serverInfo).then(status =>
+            {
+                console.log(this.props.serverInfo.serverName + " requesting");
+
+                if (status !== "ok")
+                {
+                    return;
+                }
+
+                ServerUtil.getPublicIp(this.props.serverInfo).then(publicIp =>
+                {
+                    this.setState({ serverState: ServerState.ONLINE, publicIp: publicIp! });
+                });
+            });
+
+            await this.sleep(10000);
+        }
     };
 
     private sleep(ms: number)
@@ -96,6 +112,7 @@ export class Server extends React.Component<Props, State>
         ServerUtil.stopServer(this.props.serverInfo).then(() =>
         {
             console.log(`Stopping server ${ this.props.serverInfo.serverId }...`);
+            this.setState({ serverState: ServerState.OFFLINE });
         });
     };
 }

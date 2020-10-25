@@ -14,11 +14,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ServerRepository = void 0;
 const mysql_1 = __importDefault(require("mysql"));
-const CREATE_TABLE = "CREATE TABLE servers (accountId CHAR(36) NOT NULL, serverId CHAR(36) NOT NULL, serverName VARCHAR(50) NOT NULL, INDEX accountIndex (accountId), UNIQUE INDEX serverIndex (serverId));";
+const server_state_1 = require("../server/server-state");
+const CREATE_TABLE = "CREATE TABLE servers (accountId CHAR(36) NOT NULL, serverId CHAR(36) NOT NULL, serverName VARCHAR(50) NOT NULL, instanceId VARCHAR(50), INDEX accountIndex (accountId), UNIQUE INDEX serverIndex (serverId));";
 const DROP_TABLE = "DROP TABLE servers";
-const INSERT_SERVER = "INSERT INTO servers VALUES (?, ?, ?);";
-const SELECT_SERVERS = "SELECT serverId, serverName FROM servers WHERE accountId = ?;";
+const SELECT_SERVERS = "SELECT serverId, serverName, instanceId FROM servers WHERE accountId = ?;";
+const INSERT_SERVER = "INSERT INTO servers (accountId, serverId, serverName) VALUES (?, ?, ?);";
 const DELETE_SERVER = "DELETE FROM servers WHERE serverId = ?;";
+const UPDATE_INSTANCE = "UPDATE servers SET instanceId = ? WHERE serverId = ?;";
 const CONNECTION = mysql_1.default.createConnection({
     host: "n10413316-assignment2.ce2haupt2cta.ap-southeast-2.rds.amazonaws.com",
     port: 3306,
@@ -28,15 +30,12 @@ const CONNECTION = mysql_1.default.createConnection({
 });
 class ServerRepository {
     init() {
-        this.insertServer("dd578a4f-d35e-4fed-94db-9d5a627ff962", "c29b55aa-15e5-11eb-adc1-0242ac120002", "Survival Server");
-        this.insertServer("dd578a4f-d35e-4fed-94db-9d5a627ff962", "d485d09c-15e5-11eb-adc1-0242ac120002", "Creative Server");
-        this.insertServer("dd578a4f-d35e-4fed-94db-9d5a627ff962", "e5a2b2b4-15e5-11eb-adc1-0242ac120002", "Test Server");
-    }
-    insertServer(accountId, serverId, serverName) {
-        CONNECTION.query(INSERT_SERVER, [accountId, serverId, serverName], (err, results) => {
-            if (err)
-                throw err;
+        this.selectServers("dd578a4f-d35e-4fed-94db-9d5a627ff962").then(servers => {
+            console.log(servers);
         });
+    }
+    updateInstance(serverId, instanceId) {
+        CONNECTION.query(UPDATE_INSTANCE, [instanceId, serverId]);
     }
     selectServers(accountId) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -49,16 +48,17 @@ class ServerRepository {
             for (const result of data) {
                 const serverId = result.serverId;
                 const serverName = result.serverName;
-                servers.push({ serverId, serverName });
+                const instanceId = result.instanceId;
+                servers.push({ serverId, serverName, serverState: server_state_1.ServerState.OFFLINE, instanceId });
             }
             return servers;
         });
     }
+    insertServer(accountId, serverId, serverName) {
+        CONNECTION.query(INSERT_SERVER, [accountId, serverId, serverName]);
+    }
     deleteServer(serverId) {
-        CONNECTION.query(DELETE_SERVER, [serverId], ((err, results) => {
-            if (err)
-                throw err;
-        }));
+        CONNECTION.query(DELETE_SERVER, [serverId]);
     }
     createTable() {
         CONNECTION.query(CREATE_TABLE, err => {

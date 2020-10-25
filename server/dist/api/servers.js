@@ -139,6 +139,7 @@ exports.servers.post("/start", (req, res) => {
                 return;
             }
             const instanceId = data.Instances[0].InstanceId;
+            repository.updateInstance(serverId, instanceId);
             res.json({ instanceId });
         })
             .catch(error => {
@@ -151,7 +152,19 @@ exports.servers.post("/start", (req, res) => {
 });
 exports.servers.post("/stop", (req, res) => {
     try {
+        const serverId = req.body.serverId;
         const instanceId = req.body.instanceId;
+        const request = {
+            InstanceIds: [instanceId]
+        };
+        EC2.terminateInstances(request).promise()
+            .then(data => {
+            repository.updateInstance(serverId, null);
+            res.status(200);
+        })
+            .catch(error => {
+            console.error(error, error.stack);
+        });
     }
     catch (e) {
         res.status(501);

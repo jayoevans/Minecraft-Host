@@ -199,6 +199,8 @@ servers.post("/start", (req: express.Request, res: express.Response) =>
 
                 const instanceId = data.Instances[0].InstanceId!;
 
+                repository.updateInstance(serverId, instanceId);
+
                 res.json({ instanceId });
             })
             .catch(error =>
@@ -216,8 +218,24 @@ servers.post("/stop", (req: express.Request, res: express.Response) =>
 {
     try
     {
+        const serverId = req.body.serverId;
         const instanceId = req.body.instanceId;
-        // TODO Stop server
+
+        const request: AWS.EC2.TerminateInstancesRequest = {
+            InstanceIds: [ instanceId ]
+        };
+
+        EC2.terminateInstances(request).promise()
+            .then(data =>
+            {
+                repository.updateInstance(serverId, null);
+
+                res.status(200);
+            })
+            .catch(error =>
+            {
+                console.error(error, error.stack)
+            });
     }
     catch (e)
     {

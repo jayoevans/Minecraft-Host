@@ -35,12 +35,12 @@ export class ServerUtil
         return data.status;
     }
 
-    public static async startServer(serverInfo: ServerInfo): Promise<ServerState>
+    public static async startServer(serverInfo: ServerInfo): Promise<string | undefined>
     {
         if (serverInfo.serverState !== ServerState.OFFLINE)
         {
             // Server must be offline to start
-            return serverInfo.serverState;
+            return undefined;
         }
 
         const serverId = serverInfo.serverId;
@@ -60,25 +60,26 @@ export class ServerUtil
             console.log("status code: " + response.status);
             console.log("data: " + JSON.stringify(data));
 
-            serverInfo.instanceId = data.instanceId;
+            return serverInfo.instanceId = data.instanceId;
         }
         catch (e)
         {
             console.error(e, e.stack);
+            return undefined;
         }
 
         // TODO Make requests to AWS to update state
-        return serverInfo.serverState = ServerState.STARTING;
     }
 
-    public static async stopServer(serverInfo: ServerInfo): Promise<ServerState>
+    public static async stopServer(serverInfo: ServerInfo): Promise<void>
     {
         if (serverInfo.serverState !== ServerState.ONLINE)
         {
             // Server must be online to stop
-            return serverInfo.serverState;
+            return;
         }
 
+        const serverId = serverInfo.serverId;
         const instanceId = serverInfo.instanceId;
 
         // TODO Stop servers
@@ -88,7 +89,7 @@ export class ServerUtil
             const request: RequestInit = {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ instanceId })
+                body: JSON.stringify({ serverId, instanceId })
             };
 
             const response = await fetch("http://localhost:8000/servers/stop", request);
@@ -98,14 +99,11 @@ export class ServerUtil
             console.log("status code: " + response.status);
             console.log("data: " + JSON.stringify(data));
 
-            serverInfo.instanceId = data.instanceId;
+            serverInfo.instanceId = undefined;
         }
         catch (e)
         {
             console.error(e, e.stack);
         }
-
-        // TODO Make requests to AWS to update state
-        return serverInfo.serverState = ServerState.STOPPING;
     }
 }
