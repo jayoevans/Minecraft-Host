@@ -25,17 +25,18 @@ export class Portal extends React.Component<Props, State>
                 <div id="splitDiv">
                     <article id="lHalf">
                         <div id="infoDiv">
-                            <h3 id="h3"> Current Minecraft name:{this.props.username}</h3>
-                            <h3 id="h3">Previous names: </h3>
+                            <h3 id="h3">Account Name: {this.props.username}</h3>
+                            <h3 id="h3">Name History</h3>
                             <div id="previousNames">
                                 { this.props.accountInfo.nameHistory.map((name, index) => <li key = { index }>{name}</li>) }
                             </div>
 
+                            <h3 id="h3">Servers</h3>
                             <ServerList accountId = { "dd578a4f-d35e-4fed-94db-9d5a627ff962" }/>
                         </div>
                     </article>
                     <article id="rHalf">
-                        <h3 id="h3">Players skin</h3>
+                        <h3 id="h3">Player Skin</h3>
                         <div id="imgDiv">
                             <img
                                 id="skin"
