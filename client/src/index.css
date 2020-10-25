@@ -26,7 +26,7 @@ html, body{
 #portalContainer{
   /* background-color: green; */
   height: 91%;
-    background-image: url("D:/Uni/Cab432-CloudComputing/Assignment2/Minecraft-Host/client/src/images/Minecraft-Background-Image.jpg");
+    background-image: url("images/Minecraft-Background-Image.jpg");
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -35,7 +35,7 @@ html, body{
 }
 .savedWorlds{
   display: inline-flex;
-  height: px;
+  height: 10px;
   padding-top: 10px;
   padding-bottom: 10px;
 }
@@ -170,7 +170,7 @@ html, body{
   font-size: 15px;
   color: red;
   font-style: italic;
-  margin-left: 10;
+  margin-left: 10px;
 }
 button{
   max-height: 30px;
