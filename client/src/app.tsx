@@ -3,22 +3,20 @@ import { AccountInfo } from "./login/account-info";
 import { Portal } from "./components/portal";
 import { Login } from "./components/login";
 
-export class App extends React.Component<Props, State>
+export class App extends React.Component<{}, State>
 {
-    constructor(props: Props)
+    constructor()
     {
-        super(props);
+        super({});
 
-        this.state = {
-            username: ""
-        };
+        this.state = {};
     }
 
     render()
     {
         return (
             <>
-                { this.state.accountInfo ? <Portal username = { this.state.username } accountInfo = { this.state.accountInfo }/> : <Login setAccountInfo = { this.setAccountInfo }/> }
+                { this.state.accountInfo ? <Portal accountInfo = { this.state.accountInfo }/> : <Login setAccountInfo = { this.setAccountInfo }/> }
             </>
         );
     }
@@ -29,13 +27,7 @@ export class App extends React.Component<Props, State>
     };
 }
 
-interface Props
-{
-}
-
 interface State
 {
-    username: string;
     accountInfo?: AccountInfo;
-    error?: string;
 }

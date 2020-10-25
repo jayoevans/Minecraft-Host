@@ -2,18 +2,11 @@ import React from "react";
 import { ServerList } from "./server/server-list";
 import { AccountInfo } from "../login/account-info";
 
-export class Portal extends React.Component<Props, State>
+export class Portal extends React.Component<Props>
 {
     constructor(props: Props) 
     {
         super(props);
-
-        this.state = {
-            username: "",
-            uuid: "",
-            skin: ""
-            // previousNames: [],
-        };
     }
 
     render() 
@@ -25,7 +18,7 @@ export class Portal extends React.Component<Props, State>
                 <div id="splitDiv">
                     <article id="lHalf">
                         <div id="infoDiv">
-                            <h3 id="h3">Account Name: {this.props.username}</h3>
+                            <h3 id="h3">Account Name: { this.props.accountInfo.username }</h3>
                             <h3 id="h3">Name History</h3>
                             <div id="previousNames">
                                 { this.props.accountInfo.nameHistory.map((name, index) => <li key = { index }>{name}</li>) }
@@ -53,11 +46,5 @@ export class Portal extends React.Component<Props, State>
 
 interface Props
 {
-    username: string;
     accountInfo: AccountInfo;
-}
-
-interface State
-{
-
 }

@@ -54,6 +54,7 @@ export class Login extends React.Component<Props, State>
         });
 
         const accountInfo: AccountInfo = {
+            username: this.state.username,
             uuid: data.uuid,
             skin: data.skin,
             nameHistory
@@ -70,7 +71,7 @@ export class Login extends React.Component<Props, State>
 
 interface Props
 {
-    setAccountInfo: (accountInfo: AccountInfo) => any;
+    setAccountInfo: (accountInfo: AccountInfo) => void;
 }
 
 interface State
