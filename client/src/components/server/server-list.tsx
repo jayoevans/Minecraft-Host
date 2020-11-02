@@ -34,7 +34,7 @@ export class ServerList extends React.Component<Props, State>
 
     componentDidMount(): void
     {
-        fetch(`http://localhost:8000/servers/${this.props.accountId}`)
+        fetch(`http://${window.location.hostname}:8000/servers/${this.props.accountId}`)
             .then(res => res.json())
             .then(json =>
             {
