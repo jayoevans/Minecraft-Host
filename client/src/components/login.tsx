@@ -39,7 +39,7 @@ export class Login extends React.Component<Props, State>
     {
         event.preventDefault();
 
-        const response = await fetch(`http://localhost:8000/minecraft/user/${this.state.username}`);
+        const response = await fetch(`http://${window.location.hostname}:8000/minecraft/user/${this.state.username}`);
         const data = await response.json();
 
         if (data.Error)

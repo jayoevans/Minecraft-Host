@@ -11,7 +11,7 @@ export class ServerUtil
             return undefined;
         }
 
-        const response = await fetch(`http://localhost:8000/servers/host/${instanceId}`);
+        const response = await fetch(`http://${window.location.hostname}:8000/servers/host/${instanceId}`);
 
         const data = await response.json();
 
@@ -27,7 +27,7 @@ export class ServerUtil
             return undefined;
         }
 
-        const response = await fetch(`http://localhost:8000/servers/status/${instanceId}`);
+        const response = await fetch(`http://${window.location.hostname}:8000/servers/status/${instanceId}`);
 
         const data = await response.json();
 
@@ -47,7 +47,7 @@ export class ServerUtil
                 body: JSON.stringify({ serverName, serverId })
             };
 
-            const response = await fetch("http://localhost:8000/servers/start", request);
+            const response = await fetch(`http://${window.location.hostname}:8000/servers/start`, request);
 
             const data = await response.json();
 
@@ -76,7 +76,7 @@ export class ServerUtil
                 body: JSON.stringify({ serverId, instanceId })
             };
 
-            const response = await fetch("http://localhost:8000/servers/stop", request);
+            const response = await fetch(`http://${window.location.hostname}:8000/servers/stop`, request);
 
             const data = await response.json();
 
@@ -103,7 +103,7 @@ export class ServerUtil
 
             console.log("request: " + JSON.stringify(request));
 
-            const response = await fetch("http://localhost:8000/servers/create", request);
+            const response = await fetch(`http://${window.location.hostname}:8000/servers/create`, request);
 
             const data = await response.json();
 
@@ -128,7 +128,7 @@ export class ServerUtil
                 body: JSON.stringify({ serverId })
             };
 
-            const response = await fetch("http://localhost:8000/servers/delete", request);
+            const response = await fetch(`http://${window.location.hostname}:8000/servers/delete`, request);
 
             const data = await response.json();
 
